@@ -1,0 +1,9 @@
+Makefile.PL
+MANIFEST
+Q.pm
+Q.xs
+t/01load.t
+t/new.t
+t/new_F128.t
+t/overload_string.t
+t/nan.t
