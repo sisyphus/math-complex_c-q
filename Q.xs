@@ -102,7 +102,6 @@ SV * create_cq(pTHX) {
 
 void assign_cq(pTHX_ SV * rop, SV * d1, SV * d2) {
      float128 _d1, _d2;
-     char * ptr;
 
      if(SvUOK(d1)) {
        _d1 = (float128)SvUV(d1);
@@ -168,7 +167,80 @@ void assign_cq(pTHX_ SV * rop, SV * d1, SV * d2) {
      __imag__ *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = _d2;
 }
 
-void Q2cq(pTHX_ SV * rop, SV * d1, SV * d2) {
+void set_real_cq(pTHX_ SV * rop, SV * d1) {
+     float128 _d1;
+
+     if(SvUOK(d1)) {
+       _d1 = (float128)SvUV(d1);
+     }
+     else {
+       if(SvIOK(d1)) {
+         _d1 = (float128)SvIV(d1);
+       }
+       else {
+         if(SvNOK(d1)) {
+           _d1 = (float128)SvNV(d1);
+         }
+         else {
+           if(SvPOK(d1)) {
+             _d1 = strtoflt128(SvPV_nolen(d1), NULL) ;
+           }
+           else {
+             if(sv_isobject(d1)) {
+               const char *h = HvNAME(SvSTASH(SvRV(d1)));
+               if(strEQ(h, "Math::Float128"))
+                 _d1 = *(INT2PTR(float128 *, SvIV(SvRV(d1))));
+               else croak("Invalid object given as 2nd arg to set_real_cq function");
+             }
+             else {
+               croak("Invalid 2nd arg supplied to set_real_cq function");
+             }
+           }
+         }
+       }
+     }
+
+     __real__ *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = _d1;
+}
+
+void set_imag_cq(pTHX_ SV * rop, SV * d2) {
+     float128 _d2;
+
+     if(SvUOK(d2)) {
+       _d2 = (float128)SvUV(d2);
+     }
+     else {
+       if(SvIOK(d2)) {
+         _d2 = (float128)SvIV(d2);
+       }
+       else {
+         if(SvNOK(d2)) {
+           _d2 = (float128)SvNV(d2);
+         }
+         else {
+           if(SvPOK(d2)) {
+             _d2 = strtoflt128(SvPV_nolen(d2), NULL) ;
+           }
+           else {
+             if(sv_isobject(d2)) {
+               const char *h = HvNAME(SvSTASH(SvRV(d2)));
+               if(strEQ(h, "Math::Float128"))
+                 _d2 = *(INT2PTR(float128 *, SvIV(SvRV(d2))));
+               else croak("Invalid object given as 2nd arg to set_imag_cq function");
+             }
+             else {
+               croak("Invalid 2nd arg supplied to set_imag_cq function");
+             }
+           }
+         }
+       }
+     }
+
+     __imag__ *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = _d2;
+}
+
+
+void F2cq(pTHX_ SV * rop, SV * d1, SV * d2) {
      float128 _d1, _d2;
 
      if(sv_isobject(d1) && sv_isobject(d2)) {
@@ -183,9 +255,29 @@ void Q2cq(pTHX_ SV * rop, SV * d1, SV * d2) {
           __real__ *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = _d1;
           __imag__ *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = _d2;
        }
-       else croak("Both 2nd and 3rd args supplied to Q2cq need to be Math::Float128 objects");
+       else croak("Both 2nd and 3rd args supplied to F2cq need to be Math::Float128 objects");
      }
-     else croak("Both 2nd and 3rd args supplied to Q2cq need to be Math::Float128 objects");
+     else croak("Both 2nd and 3rd args supplied to F2cq need to be Math::Float128 objects");
+}
+
+void cq2F(pTHX_ SV * rop1, SV * rop2, SV * op) {
+     if(sv_isobject(rop1)) {
+       const char *h = HvNAME(SvSTASH(SvRV(rop1)));
+       if(strEQ(h, "Math::Float128")) {
+         *(INT2PTR(float128 *, SvIV(SvRV(rop1)))) = crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+       }
+       else croak("1st arg (a %s object) supplied to cq2F needs to be a Math::Float128 object", h);
+     }
+     else croak("1st arg (which needs to be a Math::Float128 object) supplied to cq2F is not an object");
+
+     if(sv_isobject(rop2)) {
+       const char *h = HvNAME(SvSTASH(SvRV(rop2)));
+       if(strEQ(h, "Math::Float128")) {
+         *(INT2PTR(float128 *, SvIV(SvRV(rop2)))) = cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+       }
+       else croak("2nd arg (a %s object) supplied to cq2F needs to be a Math::Float128 object", h);
+     }
+     else croak("2nd arg (which needs to be a Math::Float128 object) supplied to cq2F is not an object");
 }
 
 void mul_cq(pTHX_ SV * rop, SV * op1, SV * op2) {
@@ -256,44 +348,184 @@ void sub_c_uvq(pTHX_ SV * rop, SV * op1, SV * op2) {
      *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) - SvUV(op2);
 }
 
-void DESTROY(pTHX_ SV *  rop) {
-     Safefree(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop))));
+void DESTROY(pTHX_ SV *  op) {
+     Safefree(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))));
 }
 
-SV * real_cq(pTHX_ SV * rop) {
-     return newSVnv(crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop))))));
+SV * real_cq(pTHX_ SV * op) {
+     return newSVnv(crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))))));
 }
 
-SV * imag_cq(pTHX_ SV * rop) {
-     return newSVnv(cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop))))));
+SV * real_cq2F(pTHX_ SV * op) {
+     float128 * f;
+     SV * obj_ref, * obj;
+
+     Newx(f, 1, float128);
+     if(f == NULL) croak("Failed to allocate memory in real_cq2F function");
+
+     obj_ref = newSV(0);
+     obj = newSVrv(obj_ref, "Math::Float128");
+
+     *f = crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+
+     sv_setiv(obj, INT2PTR(IV,f));
+     SvREADONLY_on(obj);
+     return obj_ref;
 }
 
-void cq2Q(pTHX_ SV * rop1, SV * rop2, SV * op) {
-     if(sv_isobject(rop1)) {
-       const char *h = HvNAME(SvSTASH(SvRV(rop1)));
-       if(strEQ(h, "Math::Float128")) {
-         *(INT2PTR(float128 *, SvIV(SvRV(rop1)))) = crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+void real_cq2str(pTHX_ SV * op) {
+     dXSARGS;
+     float128 t;
+     char * buffer;
+
+     if(sv_isobject(op)) {
+       const char *h = HvNAME(SvSTASH(SvRV(op)));
+       if(strEQ(h, "Math::Complex_C::Q")) {
+          EXTEND(SP, 1);
+          t = crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+
+          Newx(buffer, 15 + _MATH_COMPLEX_C_Q_DIGITS, char);
+          if(buffer == NULL) croak("Failed to allocate memory in real_cq2str");
+          quadmath_snprintf(buffer, 15 + _MATH_COMPLEX_C_Q_DIGITS, "%.*Qe", _MATH_COMPLEX_C_Q_DIGITS - 1, t);
+          ST(0) = sv_2mortal(newSVpv(buffer, 0));
+          Safefree(buffer);
+          XSRETURN(1);
        }
-       else croak("1st arg (a %s object) supplied to cq2Q needs to be a Math::Float128 object", h);
+       else croak("Invalid object supplied to Math::Complex_C::Q::real_cq2str function");
      }
-     else croak("1st arg (which needs to be a Math::Float128 object) supplied to cq2Q is not an object");
+     else croak("Invalid argument supplied to Math::Complex_C::Q::real_cq2str function");
+}
 
-     if(sv_isobject(rop2)) {
-       const char *h = HvNAME(SvSTASH(SvRV(rop2)));
-       if(strEQ(h, "Math::Float128")) {
-         *(INT2PTR(float128 *, SvIV(SvRV(rop2)))) = cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+SV * imag_cq(pTHX_ SV * op) {
+     return newSVnv(cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))))));
+}
+
+SV * imag_cq2F(pTHX_ SV * op) {
+     float128 * f;
+     SV * obj_ref, * obj;
+
+     Newx(f, 1, float128);
+     if(f == NULL) croak("Failed to allocate memory in imag_cq2F function");
+
+     obj_ref = newSV(0);
+     obj = newSVrv(obj_ref, "Math::Float128");
+
+     *f = cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+
+     sv_setiv(obj, INT2PTR(IV,f));
+     SvREADONLY_on(obj);
+     return obj_ref;
+}
+
+void imag_cq2str(pTHX_ SV * op) {
+     dXSARGS;
+     float128 t;
+     char * buffer;
+
+     if(sv_isobject(op)) {
+       const char *h = HvNAME(SvSTASH(SvRV(op)));
+       if(strEQ(h, "Math::Complex_C::Q")) {
+          EXTEND(SP, 1);
+          t = cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+
+          Newx(buffer, 15 + _MATH_COMPLEX_C_Q_DIGITS, char);
+          if(buffer == NULL) croak("Failed to allocate memory in imag_cq2str");
+          quadmath_snprintf(buffer, 15 + _MATH_COMPLEX_C_Q_DIGITS, "%.*Qe", _MATH_COMPLEX_C_Q_DIGITS - 1, t);
+          ST(0) = sv_2mortal(newSVpv(buffer, 0));
+          Safefree(buffer);
+          XSRETURN(1);
        }
-       else croak("2nd arg (a %s object) supplied to cq2Q needs to be a Math::Float128 object", h);
+       else croak("Invalid object supplied to Math::Complex_C::Q::imag_cq2str function");
      }
-     else croak("2nd arg (which needs to be a Math::Float128 object) supplied to cq2Q is not an object");
+     else croak("Invalid argument supplied to Math::Complex_C::Q::imag_cq2str function");
 }
 
-SV * arg_cq(pTHX_ SV * rop) {
-     return newSVnv(cargq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop))))));
+SV * arg_cq(pTHX_ SV * op) {
+     return newSVnv(cargq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))))));
 }
 
-SV * abs_cq(pTHX_ SV * rop) {
-     return newSVnv(cabsq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop))))));
+SV * arg_cq2F(pTHX_ SV * op) {
+     float128 * f;
+     SV * obj_ref, * obj;
+
+     Newx(f, 1, float128);
+     if(f == NULL) croak("Failed to allocate memory in arg_cq2F function");
+
+     obj_ref = newSV(0);
+     obj = newSVrv(obj_ref, "Math::Float128");
+
+     *f = cargq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+
+     sv_setiv(obj, INT2PTR(IV,f));
+     SvREADONLY_on(obj);
+     return obj_ref;
+}
+
+void arg_cq2str(pTHX_ SV * op) {
+     dXSARGS;
+     float128 t;
+     char * buffer;
+
+     if(sv_isobject(op)) {
+       const char *h = HvNAME(SvSTASH(SvRV(op)));
+       if(strEQ(h, "Math::Complex_C::Q")) {
+          EXTEND(SP, 1);
+          t = cargq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+
+          Newx(buffer, 15 + _MATH_COMPLEX_C_Q_DIGITS, char);
+          if(buffer == NULL) croak("Failed to allocate memory in arg_cq2str");
+          quadmath_snprintf(buffer, 15 + _MATH_COMPLEX_C_Q_DIGITS, "%.*Qe", _MATH_COMPLEX_C_Q_DIGITS - 1, t);
+          ST(0) = sv_2mortal(newSVpv(buffer, 0));
+          Safefree(buffer);
+          XSRETURN(1);
+       }
+       else croak("Invalid object supplied to Math::Complex_C::Q::arg_cq2str function");
+     }
+     else croak("Invalid argument supplied to Math::Complex_C::Q::arg_cq2str function");
+}
+
+SV * abs_cq(pTHX_ SV * op) {
+     return newSVnv(cabsq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))))));
+}
+
+SV * abs_cq2F(pTHX_ SV * op) {
+     float128 * f;
+     SV * obj_ref, * obj;
+
+     Newx(f, 1, float128);
+     if(f == NULL) croak("Failed to allocate memory in cabs_cq2F function");
+
+     obj_ref = newSV(0);
+     obj = newSVrv(obj_ref, "Math::Float128");
+
+     *f = cabsq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+
+     sv_setiv(obj, INT2PTR(IV,f));
+     SvREADONLY_on(obj);
+     return obj_ref;
+}
+
+void abs_cq2str(pTHX_ SV * op) {
+     dXSARGS;
+     float128 t;
+     char * buffer;
+
+     if(sv_isobject(op)) {
+       const char *h = HvNAME(SvSTASH(SvRV(op)));
+       if(strEQ(h, "Math::Complex_C::Q")) {
+          EXTEND(SP, 1);
+          t = cabsq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+
+          Newx(buffer, 15 + _MATH_COMPLEX_C_Q_DIGITS, char);
+          if(buffer == NULL) croak("Failed to allocate memory in arg_cq2str");
+          quadmath_snprintf(buffer, 15 + _MATH_COMPLEX_C_Q_DIGITS, "%.*Qe", _MATH_COMPLEX_C_Q_DIGITS - 1, t);
+          ST(0) = sv_2mortal(newSVpv(buffer, 0));
+          Safefree(buffer);
+          XSRETURN(1);
+       }
+       else croak("Invalid object supplied to Math::Complex_C::Q::abs_cq2str function");
+     }
+     else croak("Invalid argument supplied to Math::Complex_C::Q::abs_cq2str function");
 }
 
 void conj_cq(pTHX_ SV * rop, SV * op) {
@@ -1058,56 +1290,6 @@ SV * _itsa(pTHX_ SV * a) {
 }
 
 
-/*
-void F128toSTR(SV * f) {
-     dXSARGS;
-     float128 t;
-     char * buffer;
-
-     if(sv_isobject(f)) {
-       const char *h = HvNAME(SvSTASH(SvRV(f)));
-       if(strEQ(h, "Math::Float128")) {
-          EXTEND(SP, 1);
-          t = *(INT2PTR(float128 *, SvIV(SvRV(f))));
-
-          Newx(buffer, 15 + _DIGITS, char);
-          if(buffer == NULL) croak("Failed to allocate memory in F128toSTR");
-          quadmath_snprintf(buffer, 15 + _DIGITS, "%.*Qe", _DIGITS - 1, t);
-          ST(0) = sv_2mortal(newSVpv(buffer, 0));
-          Safefree(buffer);
-          XSRETURN(1);
-       }
-       else croak("Invalid object supplied to Math::Float128::F128toSTR function");
-     }
-     else croak("Invalid argument supplied to Math::Float128::F128toSTR function");
-}
-
-void F128toSTRP(SV * f, int decimal_prec) {
-     dXSARGS;
-     float128 t;
-     char * buffer;
-
-     if(decimal_prec < 1)croak("2nd arg (precision) to F128toSTRP  must be at least 1");
-
-     if(sv_isobject(f)) {
-       const char *h = HvNAME(SvSTASH(SvRV(f)));
-       if(strEQ(h, "Math::Float128")) {
-          EXTEND(SP, 1);
-          t = *(INT2PTR(float128 *, SvIV(SvRV(f))));
-
-          Newx(buffer, 12 + decimal_prec, char);
-          if(buffer == NULL) croak("Failed to allocate memory in F128toSTRP");
-          quadmath_snprintf(buffer, 12 + decimal_prec, "%.*Qe", decimal_prec - 1, t);
-          ST(0) = sv_2mortal(newSVpv(buffer, 0));
-          Safefree(buffer);
-          XSRETURN(1);
-       }
-       else croak("Invalid object supplied to Math::Float128::F128toSTRP function");
-     }
-     else croak("Invalid argument supplied to Math::Float128::F128toSTRP function");
-}
-*/
-
 
 MODULE = Math::Complex_C::Q  PACKAGE = Math::Complex_C::Q
 
@@ -1160,7 +1342,41 @@ assign_cq (rop, d1, d2)
         return; /* assume stack size is correct */
 
 void
-Q2cq (rop, d1, d2)
+set_real_cq (rop, d1)
+	SV *	rop
+	SV *	d1
+        PREINIT:
+        I32* temp;
+        PPCODE:
+        temp = PL_markstack_ptr++;
+        set_real_cq(aTHX_ rop, d1);
+        if (PL_markstack_ptr != temp) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = temp;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+void
+set_imag_cq (rop, d2)
+	SV *	rop
+	SV *	d2
+        PREINIT:
+        I32* temp;
+        PPCODE:
+        temp = PL_markstack_ptr++;
+        set_imag_cq(aTHX_ rop, d2);
+        if (PL_markstack_ptr != temp) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = temp;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+void
+F2cq (rop, d1, d2)
 	SV *	rop
 	SV *	d1
 	SV *	d2
@@ -1168,7 +1384,25 @@ Q2cq (rop, d1, d2)
         I32* temp;
         PPCODE:
         temp = PL_markstack_ptr++;
-        Q2cq(aTHX_ rop, d1, d2);
+        F2cq(aTHX_ rop, d1, d2);
+        if (PL_markstack_ptr != temp) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = temp;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+void
+cq2F (rop1, rop2, op)
+	SV *	rop1
+	SV *	rop2
+	SV *	op
+        PREINIT:
+        I32* temp;
+        PPCODE:
+        temp = PL_markstack_ptr++;
+        cq2F(aTHX_ rop1, rop2, op);
         if (PL_markstack_ptr != temp) {
           /* truly void, because dXSARGS not invoked */
           PL_markstack_ptr = temp;
@@ -1466,45 +1700,13 @@ sub_c_uvq (rop, op1, op2)
         return; /* assume stack size is correct */
 
 void
-DESTROY (rop)
-	SV *	rop
-        PREINIT:
-        I32* temp;
-        PPCODE:
-        temp = PL_markstack_ptr++;
-        DESTROY(aTHX_ rop);
-        if (PL_markstack_ptr != temp) {
-          /* truly void, because dXSARGS not invoked */
-          PL_markstack_ptr = temp;
-          XSRETURN_EMPTY; /* return empty stack */
-        }
-        /* must have used dXSARGS; list context implied */
-        return; /* assume stack size is correct */
-
-SV *
-real_cq (rop)
-	SV *	rop
-CODE:
-  RETVAL = real_cq (aTHX_ rop);
-OUTPUT:  RETVAL
-
-SV *
-imag_cq (rop)
-	SV *	rop
-CODE:
-  RETVAL = imag_cq (aTHX_ rop);
-OUTPUT:  RETVAL
-
-void
-cq2Q (rop1, rop2, op)
-	SV *	rop1
-	SV *	rop2
+DESTROY (op)
 	SV *	op
         PREINIT:
         I32* temp;
         PPCODE:
         temp = PL_markstack_ptr++;
-        cq2Q(aTHX_ rop1, rop2, op);
+        DESTROY(aTHX_ op);
         if (PL_markstack_ptr != temp) {
           /* truly void, because dXSARGS not invoked */
           PL_markstack_ptr = temp;
@@ -1514,18 +1716,124 @@ cq2Q (rop1, rop2, op)
         return; /* assume stack size is correct */
 
 SV *
-arg_cq (rop)
-	SV *	rop
+real_cq (op)
+	SV *	op
 CODE:
-  RETVAL = arg_cq (aTHX_ rop);
+  RETVAL = real_cq (aTHX_ op);
 OUTPUT:  RETVAL
 
 SV *
-abs_cq (rop)
-	SV *	rop
+real_cq2F (op)
+	SV *	op
 CODE:
-  RETVAL = abs_cq (aTHX_ rop);
+  RETVAL = real_cq2F (aTHX_ op);
 OUTPUT:  RETVAL
+
+void
+real_cq2str (op)
+	SV *	op
+        PREINIT:
+        I32* temp;
+        PPCODE:
+        temp = PL_markstack_ptr++;
+        real_cq2str(aTHX_ op);
+        if (PL_markstack_ptr != temp) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = temp;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+SV *
+imag_cq (op)
+	SV *	op
+CODE:
+  RETVAL = imag_cq (aTHX_ op);
+OUTPUT:  RETVAL
+
+SV *
+imag_cq2F (op)
+	SV *	op
+CODE:
+  RETVAL = imag_cq2F (aTHX_ op);
+OUTPUT:  RETVAL
+
+void
+imag_cq2str (op)
+	SV *	op
+        PREINIT:
+        I32* temp;
+        PPCODE:
+        temp = PL_markstack_ptr++;
+        imag_cq2str(aTHX_ op);
+        if (PL_markstack_ptr != temp) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = temp;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+SV *
+arg_cq (op)
+	SV *	op
+CODE:
+  RETVAL = arg_cq (aTHX_ op);
+OUTPUT:  RETVAL
+
+SV *
+arg_cq2F (op)
+	SV *	op
+CODE:
+  RETVAL = arg_cq2F (aTHX_ op);
+OUTPUT:  RETVAL
+
+void
+arg_cq2str (op)
+	SV *	op
+        PREINIT:
+        I32* temp;
+        PPCODE:
+        temp = PL_markstack_ptr++;
+        arg_cq2str(aTHX_ op);
+        if (PL_markstack_ptr != temp) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = temp;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+SV *
+abs_cq (op)
+	SV *	op
+CODE:
+  RETVAL = abs_cq (aTHX_ op);
+OUTPUT:  RETVAL
+
+SV *
+abs_cq2F (op)
+	SV *	op
+CODE:
+  RETVAL = abs_cq2F (aTHX_ op);
+OUTPUT:  RETVAL
+
+void
+abs_cq2str (op)
+	SV *	op
+        PREINIT:
+        I32* temp;
+        PPCODE:
+        temp = PL_markstack_ptr++;
+        abs_cq2str(aTHX_ op);
+        if (PL_markstack_ptr != temp) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = temp;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
 
 void
 conj_cq (rop, op)
