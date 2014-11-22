@@ -11,7 +11,7 @@ if($@) {
   exit 0;
 }
 
-print "1..3\n";
+print "1..8\n";
 
 my $f_r = Math::Float128->new('3.1');
 my $f_i = Math::Float128->new('-5.1');
@@ -40,3 +40,49 @@ else {
   warn "\n$c4 != $c2\n";
   print "not ok 3\n";
 }
+
+F2cq($c4, Math::Float128->new('18.3'), Math::Float128->new(19.5));
+cq2F($f_r, $f_i, $c4);
+
+if($f_r == '18.3' && $f_i == 19.5) {print "ok 4\n"}
+else {
+  warn "\nExpected (18.3 19.5)\nGot ($f_r $f_i)\n";
+  print "not ok 4\n";
+}
+
+
+###################################
+
+my $c6 = MCQ('-21.25', '123');
+
+my $re = real_cq2F($c6);
+my $ire = Math::Complex_C::Q::_itsa($re);
+
+if($ire == 113) {print "ok 5\n"} # M::F128 object
+else {
+  warn "\nExpected 113\nGot $ire\n";
+  print "not ok 5\n";
+}
+
+if($re == -21.25) {print "ok 6\n"}
+else {
+  warn "\nExpected -21.25\nGot $re\n";
+  print "not ok 6\n";
+}
+
+my $im = imag_cq2F($c6);
+my $iim = Math::Complex_C::Q::_itsa($im);
+
+if($iim == 113) {print "ok 7\n"} # M::F128 object
+else {
+  warn "\nExpected 113\nGot $iim\n";
+  print "not ok 7\n";
+}
+
+if($im == 123) {print "ok 8\n"}
+else {
+  warn "\nExpected 123\nGot $im\n";
+  print "not ok 8\n";
+}
+
+##################################
