@@ -29,6 +29,7 @@ use overload
     'log'   => \&_overload_log,
     'sin'   => \&_overload_sin,
     'cos'   => \&_overload_cos,
+    'atan2' => \&_overload_atan2,
 ;
 
 our $VERSION = '0.01';
