@@ -39,23 +39,23 @@ DynaLoader::bootstrap Math::Complex_C::Q $VERSION;
 @Math::Complex_C::Q::EXPORT_OK = qw(
 
     create_cq assign_cq mul_cq mul_c_nvq mul_c_ivq mul_c_uvq div_cq div_c_nvq div_c_ivq div_c_uvq add_cq
-    add_c_nvq add_c_ivq add_c_uvq sub_cq sub_c_nvq sub_c_ivq sub_c_uvq real_cq real_cq2Q imag_cq2Q Q2cq
-    cq2Q real_cq2str imag_cq2str arg_cq2Q arg_cq2str abs_cq2Q abs_cq2str
+    add_c_nvq add_c_ivq add_c_uvq sub_cq sub_c_nvq sub_c_ivq sub_c_uvq real_cq real_cq2F imag_cq2F F2cq
+    cq2F real_cq2str imag_cq2str arg_cq2F arg_cq2str abs_cq2F abs_cq2str
     imag_cq arg_cq abs_cq conj_cq acos_cq asin_cq atan_cq cos_cq sin_cq tan_cq acosh_cq asinh_cq atanh_cq
     cosh_cq sinh_cq tanh_cq exp_cq log_cq sqrt_cq proj_cq pow_cq get_nanq get_infq is_nanq is_infq MCQ
 
-    q_to_str q_to_strp q_set_prec q_get_prec
+    q_to_str q_to_strp q_set_prec q_get_prec set_real_cq set_imag_cq
     );
 
 %Math::Complex_C::Q::EXPORT_TAGS = (all => [qw(
 
     create_cq assign_cq mul_cq mul_c_nvq mul_c_ivq mul_c_uvq div_cq div_c_nvq div_c_ivq div_c_uvq add_cq
-    add_c_nvq add_c_ivq add_c_uvq sub_cq sub_c_nvq sub_c_ivq sub_c_uvq real_cq real_cq2Q imag_cq2Q Q2cq
-    cq2Q real_cq2str imag_cq2str arg_cq2Q arg_cq2str abs_cq2Q abs_cq2str
+    add_c_nvq add_c_ivq add_c_uvq sub_cq sub_c_nvq sub_c_ivq sub_c_uvq real_cq real_cq2F imag_cq2F F2cq
+    cq2F real_cq2str imag_cq2str arg_cq2F arg_cq2str abs_cq2F abs_cq2str
     imag_cq arg_cq abs_cq conj_cq acos_cq asin_cq atan_cq cos_cq sin_cq tan_cq acosh_cq asinh_cq atanh_cq
     cosh_cq sinh_cq tanh_cq exp_cq log_cq sqrt_cq proj_cq pow_cq get_nanq get_infq is_nanq is_infq MCQ
 
-    q_to_str q_to_strp q_set_prec q_get_prec
+    q_to_str q_to_strp q_set_prec q_get_prec set_real_cq set_imag_cq
     )]);
 
 sub dl_load_flags {0} # Prevent DynaLoader from complaining and croaking
@@ -161,7 +161,7 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
    use warnings;
    use strict;
    use Math::Complex_C::Q qw(:all);
-   # For brevity, use MCQ which is an alais for Math::Complex_C::new
+   # For brevity, use MCQ which is an aliasw for Math::Complex_C::new
    my $c =    MCQ(12.5, 1125); # assign as NV
    my $root = MCQ();
 
@@ -183,12 +183,13 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
         $obj = MCQ('2.3', '1.09'); # Assigns the __float128 values using C's
                                    # strtoflt128() function.
 
-        ($r, $i) = q_to_str($obj); # Uses C's quadmath_snprintf() function;
+        ($r, $i) = q_to_str($obj); # Use C's quadmath_snprintf() function to
+                                   # return real/imaginary vals as strings.
 
     2) if you have Math::Float128,assign and retrieve Math::Float128 objects:
-        $rop = MCQ($f_r, $f_i)  # Assigning values - see MCQ  docs, below.
-        Q2cq($rop, $f_r, $f_i); # Assigning values - see Q2cq docs, below.
-        cq2Q($f_r, $f_i, $op); # Retrieving values - see cq2Q docs, below.
+        $rop = MCQ($f_r, $f_i)  # Assigning  values - see MCQ  docs, below.
+        F2cq($rop, $f_r, $f_i); # Assigning  values - see F2cq docs, below.
+        cq2F($f_r, $f_i, $op);  # Retrieving values - see cq2F docs, below.
 
 =head1 FUNCTIONS
 
@@ -216,11 +217,22 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
    assign_cq($rop, $re, $im);
     The real part of $rop is set to the value of $re, the imaginary part is set to
     the value of $im. $re and $im can be  integers (IV or UV),  floating point
-    values (NV), numeric strings, or Math::Float128 objects . Integer values (IV/UV)
-    will be converted to floating point (NV) before being assigned.
+    values (NV), numeric strings, or Math::Float128 objects .
 
-   Q2cq($ropl, $r_f, $i_f); #$r_f & $i_f are Math::Float128 objects
-    Assign the real and imaginary part of $ropl from the Math::Float128 objects $r_f
+   set_real_cq($rop, $re);
+    The real part of $rop is set to the value of $re. $re can be an integer (IV or
+    UV),  floating point value (NV), numeric string, or Math::Float128 object.
+
+   set_imag_cq($rop, $im);
+    The imaginary part of $rop is set to the value of $im. $im can be an integer
+    (IV/UV),  floating point value (NV), numeric string, or Math::Float128 object.
+
+   F2cq($rop, $r_f, $i_f); #$r_f & $i_f are Math::Float128 objects
+    Assign the real and imaginary part of $rop from the Math::Float128 objects $r_f
+    and $i_f (respectively).
+
+   cq2F($r_f, $f_i, $op); #$r_f & $i_f are Math::Float128 objects
+    Assign the real and imaginary parts of $op to the Math::Float128 objects $r_f
     and $i_f (respectively).
 
    mul_cq   ($rop, $op1, $op2);
@@ -252,16 +264,16 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
 
    $nv = real_cq($op);
     Returns the real part of $op as an NV. If your perl's NV is not __float128
-    use either real_cq2Q() or real_cq2str().
+    use either real_cq2F($op) or (q_to_str($op))[1].
     Wraps C's 'crealq' function.
 
    $nv = imag_cq($op);
     Returns the imaginary part of $op as an NV. If your perl's NV is not
-    __float128 use either real_cq2Q() or real_cq2str().
+    __float128 use either real_cq2F($op) or (q_to_str($op))[1].
     Wraps C's 'cimagq' function.
 
-   $f = real_cq2Q($op);
-   $f = imag_cq2Q($op);
+   $f = real_cq2F($op);
+   $f = imag_cq2F($op);
     Returns a Math::Float128 object $f set to the value of $op's real (and
     respectively, imag) component. No point in using this function unless
     Math::Float128 is loaded.
@@ -275,10 +287,10 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
 
    $nv = arg_cq($op);
     Returns the argument of $op as an NV.If your perl's NV is not
-    __float128 use either arg_cq2Q() or arg_cq2str().
+    __float128 use either arg_cq2F() or arg_cq2str().
     Wraps C's 'cargq' function.
 
-   $f = arg_cq2Q($op);
+   $f = arg_cq2F($op);
     Returns the Math::Float128 object $f, set to the value of the argument
     of $op. No point in using this function unless Math::Float128 is loaded.
     Wraps C's 'cargq' function.
@@ -290,10 +302,10 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
 
    $nv = abs_cq($op);
     Returns the absolute value of $op as an NV.If your perl's NV is not
-    __float128 use either arg_cq2Q() or arg_cq2str().
+    __float128 use either arg_cq2F() or arg_cq2str().
     Wraps C's 'cabsq' function.
 
-   $f = abs_cq2Q($op);
+   $f = abs_cq2F($op);
     Returns the Math::Float128 object $f, set to the absolute value of $op.
     No point in using this function unless Math::Float128 is loaded.
     Wraps C's 'cabsq' function.
@@ -385,8 +397,8 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
    $si = q_get_prec();
     Set/get the precision of output values
 
-   $str = q_to_str($op);
-    Express the value of $op in a string of the form "(real imag)".
+   @strings = q_to_str($op);
+    Return an array of 2 strings (real, imag).
     Both "real" and "imag" will be expressed in scientific
     notation, to the precision returned by the q_get_prec() function (above).
     Use q_set_prec() to alter this precision.
@@ -396,7 +408,7 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
     As for q_to_str, except that the precision setting for the output value
     is set by the 2nd arg (which must be greater than 1).
 
-   cq2Q($f_r, $f_i, $op);
+   cq2F($f_r, $f_i, $op);
     Assign the real part of $op to the Math::Float128 object $f_r, and the
     imaginary part of $op to the Math::Float128 object $f_i.
 
@@ -411,9 +423,12 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
     =, "",
     abs, exp, log, cos, sin, atan2, sqrt
 
-    Overloaded operations are provided the following types:
-     IV, UV, NV, PV, Math::Complex_C::Q object.
-   .
+    Note: abs() returns an NV, not a Math::Complex_C::Q object. If your NV-type
+    is not __float128 then you should probably call abs_cq2F() or abs_cq2str()
+    instead. Check the documentation (above) of those two alternatives.
+
+    Overloaded arithmetic operations are provided the following types:
+     IV, UV, NV, PV, Math::Float128 object, Math::Complex_C::Q object.
 
     Note: For the purposes of the overloaded 'not', '!' and 'bool'
     operators, a "false" Math::Complex_C object is one with real
