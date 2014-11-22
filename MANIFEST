@@ -4,9 +4,13 @@ Q.pm
 Q.xs
 t/01load.t
 t/abs_arg.t
+t/boolt
+t/arith.t
 t/conj_proj.t
+t/log_exp.t
 t/new.t
 t/new_F128.t
 t/overload_string.t
+t/pow.t
 t/nan.t
 t/trig.t
