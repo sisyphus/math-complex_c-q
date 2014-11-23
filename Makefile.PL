@@ -10,7 +10,17 @@ my %options = %{
   ],
   'DEFINE' => $defines,
   'INC' => '',
-  'VERSION_FROM' => 'Q.pm'
+  'VERSION_FROM' => 'Q.pm',
+  META_MERGE => {
+   'meta-spec' => { version => 2 },
+    resources => {
+      repository => {
+        type => 'git',
+        url => 'https://github.com/sisyphus/math-complex_c.git',
+        web => 'https://github.com/sisyphus/math-complex_c',
+      },
+    },
+  },
 }
 };
 WriteMakefile(%options);
