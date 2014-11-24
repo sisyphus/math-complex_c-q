@@ -45,6 +45,7 @@ DynaLoader::bootstrap Math::Complex_C::Q $VERSION;
     imag_cq arg_cq abs_cq conj_cq acos_cq asin_cq atan_cq cos_cq sin_cq tan_cq acosh_cq asinh_cq atanh_cq
     cosh_cq sinh_cq tanh_cq exp_cq log_cq sqrt_cq proj_cq pow_cq
     get_nanq get_neg_infq get_infq is_nanq is_infq MCQ
+    add_c_pvq sub_c_pvq mul_c_pvq div_c_pvq
 
     str_to_q q_to_str q_to_strp q_set_prec q_get_prec set_real_cq set_imag_cq
     );
@@ -57,6 +58,7 @@ DynaLoader::bootstrap Math::Complex_C::Q $VERSION;
     imag_cq arg_cq abs_cq conj_cq acos_cq asin_cq atan_cq cos_cq sin_cq tan_cq acosh_cq asinh_cq atanh_cq
     cosh_cq sinh_cq tanh_cq exp_cq log_cq sqrt_cq proj_cq pow_cq
     get_nanq get_infq get_neg_infq is_nanq is_infq MCQ
+    add_c_pvq sub_c_pvq mul_c_pvq div_c_pvq
 
     str_to_q q_to_str q_to_strp q_set_prec q_get_prec set_real_cq set_imag_cq
     )]);
@@ -275,7 +277,7 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
     The "3rd arg" is (respectively, from top) a Math::Complex_C::Q object,
     a signed integer value (IV), an unsigned integer value (UV), a floating point
     value (NV), a numeric string (PV). The UV, IV, NV and PV values are real only -
-    ie no imaginary component. The PV will be set to __float128 values using C's
+    ie no imaginary component. The PV will be set to a __float128 value using C's
     strtoflt128() function. The UV, IV and NV values will be cast to __float128
     values.
 
