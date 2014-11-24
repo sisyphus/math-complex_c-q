@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-print "1..10\n";
+print "1..14\n";
 
 use Math::Complex_C::Q qw(:all);
 
@@ -38,3 +38,19 @@ else {print "not ok 9\n"}
 
 if($c - '2.1' == MCQ(0, '2.1')) {print "ok 10\n"}
 else {print "not ok 10\n"}
+
+$c -= '2.1';
+if($c == MCQ(0, '2.1')) {print "ok 11\n"}
+else {print "not ok 11\n"}
+
+$c += '2.1';
+if($c == MCQ('2.1', '2.1')) {print "ok 12\n"}
+else {print "not ok 12\n"}
+
+$c /= '2.1';
+if($c == MCQ(1, 1)) {print "ok 13\n"}
+else {print "not ok 13\n"}
+
+$c *= '2.5';
+if($c == MCQ(2.5, 2.5)) {print "ok 14\n"}
+else {print "not ok 14\n"}
