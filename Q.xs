@@ -41,6 +41,10 @@ typedef __float128 float128;
 typedef __complex128 complex128;
 #endif
 
+#ifdef __MINGW64_VERSION_MAJOR
+#define MINGW_W64_BUGGY 1
+#endif
+
 #define MATH_COMPLEX complex128
 
 void q_set_prec(int x) {
@@ -286,15 +290,23 @@ void mul_cq(pTHX_ SV * rop, SV * op1, SV * op2) {
 }
 
 void mul_c_nvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) * SvNV(op2);
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) *
+                                                   (float128)SvNV(op2);
 }
 
 void mul_c_ivq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) * SvIV(op2);
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) *
+                                                   (float128)SvIV(op2);
 }
 
 void mul_c_uvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) * SvUV(op2);
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) *
+                                                   (float128)SvUV(op2);
+}
+
+void mul_c_pvq(pTHX_ SV * rop, SV * op1, SV * op2) {
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) *
+                                                   strtoflt128(SvPV_nolen(op2), NULL);
 }
 
 void div_cq(pTHX_ SV * rop, SV * op1, SV * op2) {
@@ -303,15 +315,23 @@ void div_cq(pTHX_ SV * rop, SV * op1, SV * op2) {
 }
 
 void div_c_nvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) / SvNV(op2);
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) /
+                                                   (float128)SvNV(op2);
 }
 
 void div_c_ivq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) / SvIV(op2);
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) /
+                                                   (float128)SvIV(op2);
 }
 
 void div_c_uvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) / SvUV(op2);
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) /
+                                                   (float128)SvUV(op2);
+}
+
+void div_c_pvq(pTHX_ SV * rop, SV * op1, SV * op2) {
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) /
+                                                   strtoflt128(SvPV_nolen(op2), NULL);
 }
 
 void add_cq(pTHX_ SV * rop, SV * op1, SV * op2) {
@@ -320,15 +340,23 @@ void add_cq(pTHX_ SV * rop, SV * op1, SV * op2) {
 }
 
 void add_c_nvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) + SvNV(op2);
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) +
+                                                   (float128)SvNV(op2);
 }
 
 void add_c_ivq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) + SvIV(op2);
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) +
+                                                   (float128)SvIV(op2);
 }
 
 void add_c_uvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) + SvUV(op2);
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) +
+                                                   (float128)SvUV(op2);
+}
+
+void add_c_pvq(pTHX_ SV * rop, SV * op1, SV * op2) {
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) +
+                                                   strtoflt128(SvPV_nolen(op2), NULL);
 }
 
 void sub_cq(pTHX_ SV * rop, SV * op1, SV * op2) {
@@ -337,15 +365,23 @@ void sub_cq(pTHX_ SV * rop, SV * op1, SV * op2) {
 }
 
 void sub_c_nvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) - SvNV(op2);
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) -
+                                                   (float128)SvNV(op2);
 }
 
 void sub_c_ivq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) - SvIV(op2);
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) -
+                                                   (float128)SvIV(op2);
 }
 
 void sub_c_uvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) - SvUV(op2);
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) -
+                                                   (float128)SvUV(op2);
+}
+
+void sub_c_pvq(pTHX_ SV * rop, SV * op1, SV * op2) {
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) -
+                                                   strtoflt128(SvPV_nolen(op2), NULL);
 }
 
 void DESTROY(pTHX_ SV *  op) {
@@ -545,15 +581,27 @@ void atan_cq(pTHX_ SV * rop, SV * op) {
 }
 
 void cos_cq(pTHX_ SV * rop, SV * op) {
+#ifdef MINGW_W64_BUGGY
+     croak("cos_cq not implemented for mingw-w64 compilers");
+#else
      *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = ccosq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+#endif
 }
 
 void sin_cq(pTHX_ SV * rop, SV * op) {
+#ifdef MINGW_W64_BUGGY
+     croak("sin_cq not implemented for mingw-w64 compilers");
+#else
      *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = csinq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+#endif
 }
 
 void tan_cq(pTHX_ SV * rop, SV * op) {
+#ifdef MINGW_W64_BUGGY
+     croak("tan_cq not implemented for mingw-w64 compilers");
+#else
      *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = ctanq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+#endif
 }
 
 void acosh_cq(pTHX_ SV * rop, SV * op) {
@@ -569,19 +617,35 @@ void atanh_cq(pTHX_ SV * rop, SV * op) {
 }
 
 void cosh_cq(pTHX_ SV * rop, SV * op) {
+#ifdef MINGW_W64_BUGGY
+     croak("cosh_cq not implemented for mingw-w64 compilers");
+#else
      *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = ccoshq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+#endif
 }
 
 void sinh_cq(pTHX_ SV * rop, SV * op) {
+#ifdef MINGW_W64_BUGGY
+     croak("sinh_cq not implemented for mingw-w64 compilers");
+#else
      *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = csinhq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+#endif
 }
 
 void tanh_cq(pTHX_ SV * rop, SV * op) {
+#ifdef MINGW_W64_BUGGY
+     croak("tanh_cq not implemented for mingw-w64 compilers");
+#else
      *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = ctanhq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+#endif
 }
 
 void exp_cq(pTHX_ SV * rop, SV * op) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop))))= cexpq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+#ifdef MINGW_W64_BUGGY /* avoid calling expq() as it's buggy */
+     croak("exp_cq not implemented for mingw-w64 compilers");
+#else
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = cexpq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+#endif
 }
 
 void log_cq(pTHX_ SV * rop, SV * op) {
@@ -597,8 +661,12 @@ void proj_cq(pTHX_ SV * rop, SV * op) {
 }
 
 void pow_cq(pTHX_ SV * rop, SV * op, SV * exp) {
+#ifdef MINGW_W64_BUGGY
+     croak("pow_cq not implemented for mingw-w64 compilers");
+#else
      *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))),
                                                         *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(exp)))));
+#endif
 }
 
 SV * _overload_true(pTHX_ SV * rop, SV * second, SV * third) {
@@ -620,17 +688,17 @@ SV * _overload_not(pTHX_ SV * rop, SV * second, SV * third) {
 SV * _overload_equiv(pTHX_ SV * a, SV * b, SV * third) {
       if(SvUOK(b)) {
        if((float128)SvUV(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
-          0       == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(1);
+          0.0Q              == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(1);
        return newSVuv(0);
      }
      if(SvIOK(b)) {
        if((float128)SvIV(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
-          0       == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(1);
+          0.0Q              == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(1);
        return newSVuv(0);
      }
      if((float128)SvNOK(b)) {
        if(SvNV(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
-          0       == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(1);
+          0.0Q    == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(1);
        return newSVuv(0);
      }
 
@@ -656,17 +724,17 @@ SV * _overload_equiv(pTHX_ SV * a, SV * b, SV * third) {
 SV * _overload_not_equiv(pTHX_ SV * a, SV * b, SV * third) {
      if(SvUOK(b)) {
        if((float128)SvUV(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
-          0       == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(0);
+          0.0Q              == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(0);
        return newSVuv(1);
      }
      if(SvIOK(b)) {
        if((float128)SvIV(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
-          0       == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(0);
+          0.0Q              == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(0);
        return newSVuv(1);
      }
      if((float128)SvNOK(b)) {
        if(SvNV(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
-          0       == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(0);
+          0.0Q    == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(0);
        return newSVuv(1);
      }
      if(SvPOK(b)) {
@@ -689,6 +757,9 @@ SV * _overload_not_equiv(pTHX_ SV * a, SV * b, SV * third) {
 
 
 SV * _overload_pow(pTHX_ SV * a, SV * b, SV * third) {
+#ifdef MINGW_W64_BUGGY
+     croak("** (pow) not overloaded for mingw-w64 compilers");
+#else
      MATH_COMPLEX *pc, t;
      SV * obj_ref, * obj;
 
@@ -732,6 +803,7 @@ SV * _overload_pow(pTHX_ SV * a, SV * b, SV * third) {
        }
      }
      else croak("Invalid argument supplied to Math::Complex_C::Q::_overload_pow function");
+#endif
 }
 
 SV * _overload_mul(pTHX_ SV * a, SV * b, SV * third) {
@@ -928,16 +1000,37 @@ SV * _overload_sqrt(pTHX_ SV * a, SV * b, SV * third) {
 }
 
 SV * _overload_pow_eq(pTHX_ SV * a, SV * b, SV * third) {
+#ifdef MINGW_W64_BUGGY
+     croak("**= (pow-equal) not overloaded for mingw-w64 compilers");
+#else
      MATH_COMPLEX t;
      SvREFCNT_inc(a);
 
-     if(SvNOK(b) || SvIOK(b) || SvUOK(b)) {
-       __real__ t = SvNV(b);
-       __imag__ t = 0.0;
+     if(SvUOK(b)) {
+       __real__ t = (float128)SvUV(b);
+       __imag__ t = 0.0Q;
        *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))), t);
        return a;
      }
-     else if(sv_isobject(b)) {
+     if(SvIOK(b)) {
+       __real__ t = (float128)SvIV(b);
+       __imag__ t = 0.0Q;
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))), t);
+       return a;
+     }
+     if(SvNOK(b)) {
+       __real__ t = (float128)SvNV(b);
+       __imag__ t = 0.0Q;
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))), t);
+       return a;
+     }
+     if(SvPOK(b)) {
+       __real__ t = strtoflt128(SvPV_nolen(b), NULL);
+       __imag__ t = 0.0Q;
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))), t);
+       return a;
+     }
+     if(sv_isobject(b)) {
        const char *h = HvNAME(SvSTASH(SvRV(b)));
        if(strEQ(h, "Math::Complex_C::Q")) {
        *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))),
@@ -945,27 +1038,31 @@ SV * _overload_pow_eq(pTHX_ SV * a, SV * b, SV * third) {
          return a;
        }
      }
-     else {
-       SvREFCNT_dec(a);
-       croak("Invalid argument supplied to Math::Complex_C::Q::_overload_pow_eq function");
-     }
+     SvREFCNT_dec(a);
+     croak("Invalid argument supplied to Math::Complex_C::Q::_overload_pow_eq function");
+#endif
 }
 
 SV * _overload_mul_eq(pTHX_ SV * a, SV * b, SV * third) {
      SvREFCNT_inc(a);
 
      if(SvUOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) *= SvUV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) *= (float128)SvUV(b);
        return a;
      }
 
      if(SvIOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) *= SvIV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) *= (float128)SvIV(b);
        return a;
      }
 
      if(SvNOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) *= SvNV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) *= (float128)SvNV(b);
+       return a;
+     }
+
+     if(SvPOK(b)) {
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) *= strtoflt128(SvPV_nolen(b), NULL);
        return a;
      }
 
@@ -985,17 +1082,22 @@ SV * _overload_add_eq(pTHX_ SV * a, SV * b, SV * third) {
      SvREFCNT_inc(a);
 
      if(SvUOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) += SvUV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) += (float128)SvUV(b);
        return a;
      }
 
      if(SvIOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) += SvIV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) += (float128)SvIV(b);
        return a;
      }
 
      if(SvNOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) += SvNV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) += (float128)SvNV(b);
+       return a;
+     }
+
+     if(SvPOK(b)) {
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) += strtoflt128(SvPV_nolen(b), NULL);
        return a;
      }
 
@@ -1015,17 +1117,22 @@ SV * _overload_div_eq(pTHX_ SV * a, SV * b, SV * third) {
      SvREFCNT_inc(a);
 
      if(SvUOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) /= SvUV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) /= (float128)SvUV(b);
        return a;
      }
 
      if(SvIOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) /= SvIV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) /= (float128)SvIV(b);
        return a;
      }
 
      if(SvNOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) /= SvNV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) /= (float128)SvNV(b);
+       return a;
+     }
+
+     if(SvPOK(b)) {
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) /= strtoflt128(SvPV_nolen(b), NULL);
        return a;
      }
 
@@ -1045,17 +1152,22 @@ SV * _overload_sub_eq(pTHX_ SV * a, SV * b, SV * third) {
      SvREFCNT_inc(a);
 
      if(SvUOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) -= SvUV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) -= (float128)SvUV(b);
        return a;
      }
 
      if(SvIOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) -= SvIV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) -= (float128)SvIV(b);
        return a;
      }
 
      if(SvNOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) -= SvNV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) -= (float128)SvNV(b);
+       return a;
+     }
+
+     if(SvPOK(b)) {
+       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) -= strtoflt128(SvPV_nolen(b), NULL);
        return a;
      }
 
@@ -1096,6 +1208,9 @@ SV * _overload_abs(pTHX_ SV * rop, SV * second, SV * third) {
 }
 
 SV * _overload_exp(pTHX_ SV * a, SV * b, SV * third) {
+#ifdef MINGW_W64_BUGGY
+     croak("exp not overloaded with mingw-w64 compilers");
+#else
      MATH_COMPLEX *pc;
      SV * obj_ref, * obj;
 
@@ -1110,6 +1225,7 @@ SV * _overload_exp(pTHX_ SV * a, SV * b, SV * third) {
      sv_setiv(obj, INT2PTR(IV,pc));
      SvREADONLY_on(obj);
      return obj_ref;
+#endif
 }
 
 SV * _overload_log(pTHX_ SV * a, SV * b, SV * third) {
@@ -1130,6 +1246,9 @@ SV * _overload_log(pTHX_ SV * a, SV * b, SV * third) {
 }
 
 SV * _overload_sin(pTHX_ SV * a, SV * b, SV * third) {
+#ifdef MINGW_W64_BUGGY
+     croak("sin not overloaded for mingw-w64 compilers");
+#else
      MATH_COMPLEX *pc;
      SV * obj_ref, * obj;
 
@@ -1144,9 +1263,13 @@ SV * _overload_sin(pTHX_ SV * a, SV * b, SV * third) {
      sv_setiv(obj, INT2PTR(IV,pc));
      SvREADONLY_on(obj);
      return obj_ref;
+#endif
 }
 
 SV * _overload_cos(pTHX_ SV * a, SV * b, SV * third) {
+#ifdef MINGW_W64_BUGGY
+     croak("cos not overloaded for mingw-w64 compilers");
+#else
      MATH_COMPLEX *pc;
      SV * obj_ref, * obj;
 
@@ -1161,6 +1284,7 @@ SV * _overload_cos(pTHX_ SV * a, SV * b, SV * third) {
      sv_setiv(obj, INT2PTR(IV,pc));
      SvREADONLY_on(obj);
      return obj_ref;
+#endif
 }
 
 SV * _overload_atan2(pTHX_ SV * a, SV * b, SV * third) {
@@ -1399,6 +1523,15 @@ SV * _itsa(pTHX_ SV * a) {
      return newSVuv(0);
 }
 
+int _mingw_w64_bug(void) {
+#ifdef MINGW_W64_BUGGY
+    return 1;
+#else
+    return 0;
+#endif
+}
+
+
 
 
 MODULE = Math::Complex_C::Q  PACKAGE = Math::Complex_C::Q
@@ -1594,6 +1727,24 @@ mul_c_uvq (rop, op1, op2)
         return; /* assume stack size is correct */
 
 void
+mul_c_pvq (rop, op1, op2)
+	SV *	rop
+	SV *	op1
+	SV *	op2
+        PREINIT:
+        I32* temp;
+        PPCODE:
+        temp = PL_markstack_ptr++;
+        mul_c_pvq(aTHX_ rop, op1, op2);
+        if (PL_markstack_ptr != temp) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = temp;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+void
 div_cq (rop, op1, op2)
 	SV *	rop
 	SV *	op1
@@ -1657,6 +1808,24 @@ div_c_uvq (rop, op1, op2)
         PPCODE:
         temp = PL_markstack_ptr++;
         div_c_uvq(aTHX_ rop, op1, op2);
+        if (PL_markstack_ptr != temp) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = temp;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+void
+div_c_pvq (rop, op1, op2)
+	SV *	rop
+	SV *	op1
+	SV *	op2
+        PREINIT:
+        I32* temp;
+        PPCODE:
+        temp = PL_markstack_ptr++;
+        div_c_pvq(aTHX_ rop, op1, op2);
         if (PL_markstack_ptr != temp) {
           /* truly void, because dXSARGS not invoked */
           PL_markstack_ptr = temp;
@@ -1738,6 +1907,24 @@ add_c_uvq (rop, op1, op2)
         return; /* assume stack size is correct */
 
 void
+add_c_pvq (rop, op1, op2)
+	SV *	rop
+	SV *	op1
+	SV *	op2
+        PREINIT:
+        I32* temp;
+        PPCODE:
+        temp = PL_markstack_ptr++;
+        add_c_pvq(aTHX_ rop, op1, op2);
+        if (PL_markstack_ptr != temp) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = temp;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+void
 sub_cq (rop, op1, op2)
 	SV *	rop
 	SV *	op1
@@ -1801,6 +1988,24 @@ sub_c_uvq (rop, op1, op2)
         PPCODE:
         temp = PL_markstack_ptr++;
         sub_c_uvq(aTHX_ rop, op1, op2);
+        if (PL_markstack_ptr != temp) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = temp;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+void
+sub_c_pvq (rop, op1, op2)
+	SV *	rop
+	SV *	op1
+	SV *	op2
+        PREINIT:
+        I32* temp;
+        PPCODE:
+        temp = PL_markstack_ptr++;
+        sub_c_pvq(aTHX_ rop, op1, op2);
         if (PL_markstack_ptr != temp) {
           /* truly void, because dXSARGS not invoked */
           PL_markstack_ptr = temp;
@@ -2636,4 +2841,8 @@ _itsa (a)
 CODE:
   RETVAL = _itsa (aTHX_ a);
 OUTPUT:  RETVAL
+
+int
+_mingw_w64_bug ()
+
 
