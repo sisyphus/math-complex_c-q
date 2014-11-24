@@ -9,46 +9,76 @@ my $eps = 1e-12;
 my $op = MCQ(2, 2);
 my $rop = MCQ();
 
-sin_cq($rop, $op);
-
-if(approx(real_cq($rop), 3.420954861117, $eps)) {print "ok 1\n"}
+if(Math::Complex_C::Q::_mingw_w64_bug()) {
+  eval{sin_cq($rop, $op);};
+  if($@ =~ /sin_cq not implemented/) {print "ok 1\nok 2\n"}
+  else {
+    warn "\n\$\@: $@\n";
+    print "not ok 1\n";
+  }
+}
 else {
-  warn "\nExpected approx 3.420954861117\nGot ", real_cq($rop), "\n";
-  print "not ok 1\n";
+  sin_cq($rop, $op);
+
+  if(approx(real_cq($rop), 3.420954861117, $eps)) {print "ok 1\n"}
+  else {
+    warn "\nExpected approx 3.420954861117\nGot ", real_cq($rop), "\n";
+    print "not ok 1\n";
+  }
+
+  if(approx(imag_cq($rop), -1.50930648532362, $eps)) {print "ok 2\n"}
+  else {
+    warn "\nExpected approx -1.50930648532362\nGot ", imag_cq($rop), "\n";
+    print "not ok 2\n";
+  }
 }
 
-if(approx(imag_cq($rop), -1.50930648532362, $eps)) {print "ok 2\n"}
+if(Math::Complex_C::Q::_mingw_w64_bug()) {
+  eval{cos_cq($rop, $op);};
+  if($@ =~ /cos_cq not implemented/) {print "ok 3\nok 4\n"}
+  else {
+    warn "\n\$\@: $@\n";
+    print "not ok 3\n";
+  }
+}
 else {
-  warn "\nExpected approx -1.50930648532362\nGot ", imag_cq($rop), "\n";
-  print "not ok 2\n";
+  cos_cq($rop, $op);
+
+  if(approx(real_cq($rop), -1.56562583531574, $eps)) {print "ok 3\n"}
+  else {
+    warn "\nExpected approx -1.56562583531574\nGot ", real_cq($rop), "\n";
+    print "not ok 3\n";
+  }
+
+  if(approx(imag_cq($rop), -3.29789483631124, $eps)) {print "ok 4\n"}
+  else {
+    warn "\nExpected approx -3.29789483631124\nGot ", imag_cq($rop), "\n";
+    print "not ok 4\n";
+  }
 }
 
-cos_cq($rop, $op);
-
-if(approx(real_cq($rop), -1.56562583531574, $eps)) {print "ok 3\n"}
-else {
-  warn "\nExpected approx -1.56562583531574\nGot ", real_cq($rop), "\n";
-  print "not ok 3\n";
+if(Math::Complex_C::Q::_mingw_w64_bug()) {
+  eval{tan_cq($rop, $op);};
+  if($@ =~ /tan_cq not implemented/) {print "ok 5\nok 6\n"}
+  else {
+    warn "\n\$\@: $@\n";
+    print "not ok 5\n";
+  }
 }
-
-if(approx(imag_cq($rop), -3.29789483631124, $eps)) {print "ok 4\n"}
 else {
-  warn "\nExpected approx -3.29789483631124\nGot ", imag_cq($rop), "\n";
-  print "not ok 4\n";
-}
+  tan_cq($rop, $op);
 
-tan_cq($rop, $op);
+  if(approx(real_cq($rop), -0.0283929528682323, 0.00000000001)) {print "ok 5\n"}
+  else {
+    warn "\nExpected approx -0.0283929528682323\nGot ", real_cq($rop), "\n";
+    print "not ok 5\n";
+  }
 
-if(approx(real_cq($rop), -0.0283929528682323, 0.00000000001)) {print "ok 5\n"}
-else {
-  warn "\nExpected approx -0.0283929528682323\nGot ", real_cq($rop), "\n";
-  print "not ok 5\n";
-}
-
-if(approx(imag_cq($rop), 1.0238355945704727, 0.00000000001)) {print "ok 6\n"}
-else {
-  warn "\nExpected approx 1.0238355945704727\nGot ", imag_cq($rop), "\n";
-  print "not ok 6\n";
+  if(approx(imag_cq($rop), 1.0238355945704727, 0.00000000001)) {print "ok 6\n"}
+  else {
+    warn "\nExpected approx 1.0238355945704727\nGot ", imag_cq($rop), "\n";
+    print "not ok 6\n";
+  }
 }
 
 ###################################
@@ -99,46 +129,76 @@ else {
 #################################
 #################################
 
-sinh_cq($rop, $op);
-
-if(approx(real_cq($rop), -1.50930648532362, $eps)) {print "ok 13\n"}
+if(Math::Complex_C::Q::_mingw_w64_bug()) {
+  eval{sinh_cq($rop, $op);};
+  if($@ =~ /sinh_cq not implemented/) {print "ok 13\nok 14\n"}
+  else {
+    warn "\n\$\@: $@\n";
+    print "not ok 13\n";
+  }
+}
 else {
-  warn "\nExpected approx -1.50930648532362\nGot ", real_cq($rop), "\n";
-  print "not ok 13\n";
+  sinh_cq($rop, $op);
+
+  if(approx(real_cq($rop), -1.50930648532362, $eps)) {print "ok 13\n"}
+  else {
+    warn "\nExpected approx -1.50930648532362\nGot ", real_cq($rop), "\n";
+    print "not ok 13\n";
+  }
+
+  if(approx(imag_cq($rop), 3.42095486111701, $eps)) {print "ok 14\n"}
+  else {
+    warn "\nExpected approx 3.42095486111701\nGot ", imag_cq($rop), "\n";
+    print "not ok 14\n";
+  }
 }
 
-if(approx(imag_cq($rop), 3.42095486111701, $eps)) {print "ok 14\n"}
+if(Math::Complex_C::Q::_mingw_w64_bug()) {
+  eval{cosh_cq($rop, $op);};
+  if($@ =~ /cosh_cq not implemented/) {print "ok 15\nok 16\n"}
+  else {
+    warn "\n\$\@: $@\n";
+    print "not ok 15\n";
+  }
+}
 else {
-  warn "\nExpected approx 3.42095486111701\nGot ", imag_cq($rop), "\n";
-  print "not ok 14\n";
+  cosh_cq($rop, $op);
+
+  if(approx(real_cq($rop), -1.56562583531574, $eps)) {print "ok 15\n"}
+  else {
+    warn "\nExpected approx -1.56562583531574\nGot ", real_cq($rop), "\n";
+    print "not ok 15\n";
+  }
+
+  if(approx(imag_cq($rop), 3.29789483631124, $eps)) {print "ok 16\n"}
+  else {
+    warn "\nExpected approx 3.29789483631124\nGot ", imag_cq($rop), "\n";
+    print "not ok 16\n";
+  }
 }
 
-cosh_cq($rop, $op);
-
-if(approx(real_cq($rop), -1.56562583531574, $eps)) {print "ok 15\n"}
-else {
-  warn "\nExpected approx -1.56562583531574\nGot ", real_cq($rop), "\n";
-  print "not ok 15\n";
+if(Math::Complex_C::Q::_mingw_w64_bug()) {
+  eval{tanh_cq($rop, $op);};
+  if($@ =~ /tanh_cq not implemented/) {print "ok 17\nok 18\n"}
+  else {
+    warn "\n\$\@: $@\n";
+    print "not ok 17\n";
+  }
 }
-
-if(approx(imag_cq($rop), 3.29789483631124, $eps)) {print "ok 16\n"}
 else {
-  warn "\nExpected approx 3.29789483631124\nGot ", imag_cq($rop), "\n";
-  print "not ok 16\n";
-}
+  tanh_cq($rop, $op);
 
-tanh_cq($rop, $op);
+  if(approx(real_cq($rop), 1.0238355945704727, 0.00000000001)) {print "ok 17\n"}
+  else {
+    warn "\nExpected approx 1.0238355945704727\nGot ", real_cq($rop), "\n";
+    print "not ok 17\n";
+  }
 
-if(approx(real_cq($rop), 1.0238355945704727, 0.00000000001)) {print "ok 17\n"}
-else {
-  warn "\nExpected approx 1.0238355945704727\nGot ", real_cq($rop), "\n";
-  print "not ok 17\n";
-}
-
-if(approx(imag_cq($rop), -0.0283929528682323, 0.00000000001)) {print "ok 18\n"}
-else {
-  warn "\nExpected approx -0.0283929528682323\nGot ", imag_cq($rop), "\n";
-  print "not ok 18\n";
+  if(approx(imag_cq($rop), -0.0283929528682323, 0.00000000001)) {print "ok 18\n"}
+  else {
+    warn "\nExpected approx -0.0283929528682323\nGot ", imag_cq($rop), "\n";
+    print "not ok 18\n";
+  }
 }
 
 ###################################
@@ -189,32 +249,52 @@ else {
 ###################################
 ###################################
 
-$rop = sin($op);
-
-if(approx(real_cq($rop), 3.420954861117, $eps)) {print "ok 25\n"}
+if(Math::Complex_C::Q::_mingw_w64_bug()) {
+  eval {$rop = sin($op);};
+  if($@ =~ /sin not overloaded/) {print "ok 25\nok 26\n"}
+  else {
+    warn "\n\$\@: $@\n";
+    print "not ok 25\n";
+  }
+}
 else {
-  warn "\nExpected approx 3.420954861117\nGot ", real_cq($rop), "\n";
-  print "not ok 25\n";
+  $rop = sin($op);
+
+  if(approx(real_cq($rop), 3.420954861117, $eps)) {print "ok 25\n"}
+  else {
+    warn "\nExpected approx 3.420954861117\nGot ", real_cq($rop), "\n";
+    print "not ok 25\n";
+  }
+
+  if(approx(imag_cq($rop), -1.50930648532362, $eps)) {print "ok 26\n"}
+  else {
+    warn "\nExpected approx -1.50930648532362\nGot ", imag_cq($rop), "\n";
+    print "not ok 26\n";
+  }
 }
 
-if(approx(imag_cq($rop), -1.50930648532362, $eps)) {print "ok 26\n"}
-else {
-  warn "\nExpected approx -1.50930648532362\nGot ", imag_cq($rop), "\n";
-  print "not ok 26\n";
+if(Math::Complex_C::Q::_mingw_w64_bug()) {
+  eval {$rop = cos($op);};
+  if($@ =~ /cos not overloaded/) {print "ok 27\nok 28\n"}
+  else {
+    warn "\n\$\@: $@\n";
+    print "not ok 27\n";
+  }
 }
-
-$rop = cos($op);
-
-if(approx(real_cq($rop), -1.56562583531574, $eps)) {print "ok 27\n"}
 else {
-  warn "\nExpected approx -1.56562583531574\nGot ", real_cq($rop), "\n";
-  print "not ok 27\n";
-}
+  $rop = cos($op);
 
-if(approx(imag_cq($rop), -3.29789483631124, $eps)) {print "ok 28\n"}
-else {
-  warn "\nExpected approx -3.29789483631124\nGot ", imag_cq($rop), "\n";
-  print "not ok 28\n";
+  if(approx(real_cq($rop), -1.56562583531574, $eps)) {print "ok 27\n"}
+  else {
+    warn "\nExpected approx -1.56562583531574\nGot ", real_cq($rop), "\n";
+    print "not ok 27\n";
+  }
+
+  if(approx(imag_cq($rop), -3.29789483631124, $eps)) {print "ok 28\n"}
+  else {
+    warn "\nExpected approx -3.29789483631124\nGot ", imag_cq($rop), "\n";
+    print "not ok 28\n";
+  }
 }
 
 ###################################
