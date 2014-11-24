@@ -2,7 +2,7 @@ use warnings;
 use strict;
 use Math::Complex_C::Q qw(:all);
 
-print "1..24\n";
+print "1..28\n";
 
 my $eps = 1e-12;
 
@@ -238,6 +238,36 @@ if(approx(real_cq($c3), real_cq($c2), $eps) && approx(imag_cq($c3), imag_cq($c2)
 else {
   warn "\$c3: $c3\n";
   print "not ok 24\n";
+}
+
+my $c = MCQ(2.5, 2.5);
+
+mul_c_pvq($c, $c, '2.5');
+if($c == MCQ('6.25', 6.25)) {print "ok 25\n"}
+else {
+  warn "\n\$C: $c\n";
+  print "not ok 25\n";
+}
+
+div_c_pvq($c, $c, '2.5');
+if($c == MCQ('2.5', 2.5)) {print "ok 26\n"}
+else {
+  warn "\n\$C: $c\n";
+  print "not ok 26\n";
+}
+
+add_c_pvq($c, $c, '2.5');
+if($c == MCQ(5, 2.5)) {print "ok 27\n"}
+else {
+  warn "\n\$C: $c\n";
+  print "not ok 27\n";
+}
+
+sub_c_pvq($c, $c, '2.5');
+if($c == MCQ(2.5, 2.5)) {print "ok 28\n"}
+else {
+  warn "\n\$C: $c\n";
+  print "not ok 28\n";
 }
 
 sub approx {
