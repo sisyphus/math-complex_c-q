@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-print "1..14\n";
+print "1..16\n";
 
 use Math::Complex_C::Q qw(:all);
 
@@ -54,3 +54,36 @@ else {print "not ok 13\n"}
 $c *= '2.5';
 if($c == MCQ(2.5, 2.5)) {print "ok 14\n"}
 else {print "not ok 14\n"}
+
+if(Math::Complex_C::Q::_mingw_w64_bug()) {
+  eval{my $t = $c ** '0';};
+  if($@ =~ /\*\* \(pow\) not overloaded/) {print "ok 15\n"}
+  else {
+    warn "\n\$\@: $@\n";
+    print "not ok 15\n";
+  }
+}
+else {
+  if($c ** 0 == MCQ(1,0)) {print "ok 15\n"}
+  else {
+    warn "\n\$C: $c\n";
+    print "not ok 15\n";
+  }
+}
+
+if(Math::Complex_C::Q::_mingw_w64_bug()) {
+  eval{$c **= '0';};
+  if($@ =~ /\*\*= \(pow\-equal\) not overloaded/) {print "ok 16\n"}
+  else {
+    warn "\n\$\@: $@\n";
+    print "not ok 16\n";
+  }
+}
+else {
+  $c **= 0;
+  if($c == MCQ(1,0)) {print "ok 16\n"}
+  else {
+    warn "\n\$C: $c\n";
+    print "not ok 16\n";
+  }
+}
