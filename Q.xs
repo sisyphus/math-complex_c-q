@@ -41,8 +41,12 @@ typedef __float128 float128;
 typedef __complex128 complex128;
 #endif
 
-#ifdef __MINGW64_VERSION_MAJOR
+#ifdef __MINGW64_VERSION_MAJOR /* This condition needs tweaking when the bugginess is fixed */
 #define MINGW_W64_BUGGY 1
+#endif
+
+#if defined(__MINGW32__) && !defined(__MINGW64_VERSION_MAJOR)
+#define MINGW_ORG_VENDOR 1
 #endif
 
 #define MATH_COMPLEX complex128
@@ -597,8 +601,11 @@ void sin_cq(pTHX_ SV * rop, SV * op) {
 }
 
 void tan_cq(pTHX_ SV * rop, SV * op) {
-#ifdef MINGW_W64_BUGGY
+#if defined(MINGW_W64_BUGGY)
      croak("tan_cq not implemented for mingw-w64 compilers");
+#elif defined(MINGW_ORG_VENDOR)
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = csinq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))))) /
+                                                   ccosq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
 #else
      *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = ctanq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
 #endif
@@ -635,6 +642,9 @@ void sinh_cq(pTHX_ SV * rop, SV * op) {
 void tanh_cq(pTHX_ SV * rop, SV * op) {
 #ifdef MINGW_W64_BUGGY
      croak("tanh_cq not implemented for mingw-w64 compilers");
+#elif defined(MINGW_ORG_VENDOR)
+     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = csinhq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))))) /
+                                                   ccoshq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
 #else
      *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = ctanhq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
 #endif
@@ -1525,6 +1535,14 @@ SV * _itsa(pTHX_ SV * a) {
 
 int _mingw_w64_bug(void) {
 #ifdef MINGW_W64_BUGGY
+    return 1;
+#else
+    return 0;
+#endif
+}
+
+int _mingw_org(void) {
+#ifdef MINGW_ORG_VENDOR
     return 1;
 #else
     return 0;
@@ -2844,5 +2862,9 @@ OUTPUT:  RETVAL
 
 int
 _mingw_w64_bug ()
+
+
+int
+_mingw_org ()
 
 
