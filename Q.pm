@@ -370,13 +370,17 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
 
    cos_cq($rop, $op);
     Sets $rop to cos($op). Wraps C's 'ccosq' function.
+    Not presently implemented with mingw-64 compilers - crashes perl.
 
    sin_cq($rop, $op);
-   sin_cl($ropl, $op);
     Sets $rop to sin($op). Wraps C's 'csinq' function.
+    Not presently implemented with mingw-64 compilers - crashes perl.
 
    tan_cq($rop, $op);
     Sets $rop to tan($op). Wraps C's 'ctanq' function.
+    Not presently implemented with mingw-64 compilers - crashes perl.
+    With mingw.org compilers this is currently implemented as sin
+    divided by cos, as tan itself gets mis-calculated.
 
    acosh_cq($rop, $op);
     Sets $rop to acosh($op). Wraps C's 'cacoshq' function.
@@ -389,21 +393,29 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
 
    cosh_cq($rop, $op);
     Sets $rop to cosh($op). Wraps C's 'ccoshq' function.
+    Not presently implemented with mingw-64 compilers - crashes perl.
 
    sinh_cq($rop, $op);
     Sets $rop to sinh($op). Wraps C's 'csinhq' function.
+    Not presently implemented with mingw-64 compilers - crashes perl.
 
    tanh_cq($rop, $op);
     Sets $rop to tanh($op). Wraps C's 'ctanhq' function.
+    Not presently implemented with mingw-64 compilers - crashes perl.
+    With mingw.org compilers this is currently implemented as sinh
+    divided by cosh, as tanh itself gets mis-calculated.
 
    exp_cq($rop, $op);
     Sets $rop to e ** $op. Wraps C's 'cexpq' function.
+    Not presently implemented with mingw-64 compilers - crashes perl.
 
    log_cq($rop, $op);
     Sets $rop to log($op). Wraps C's 'clogq' function.
+    Not presently implemented with mingw-64 compilers - crashes perl.
 
    pow_cq($rop, $op1, $op2);
     Sets $rop to $op1 ** $op2. Wraps C's 'cpowq' function.
+    Not presently implemented with mingw-64 compilers - crashes perl.
 
    sqrt_cq($rop, $op);
     Sets $rop to sqrt($op). Wraps C's 'csqrtq' function.
@@ -473,6 +485,9 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
     Note: abs() returns an NV, not a Math::Complex_C::Q object. If your NV-type
     is not __float128 then you should probably call abs_cq2F() or abs_cq2str()
     instead. Check the documentation (above) of those two alternatives.
+
+    Note: With mingw-w64 compilers exp, log, sin, cos, ** and **= overloading
+    is not provided because calling the underlying C functions crashes perl.
 
     Overloaded arithmetic operations are provided the following types:
      IV, UV, NV, PV, Math::Complex_C::Q object.
