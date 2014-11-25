@@ -31,4 +31,7 @@ else {
   print "not ok 3\n";
 }
 
+warn "\n   No support for pow, exp, sin, cos, tan, sinh, cosh, tanh\n   with this compiler.\n"
+ if Math::Complex_C::Q::_mingw_w64_bug();
+
 
