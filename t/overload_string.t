@@ -13,10 +13,16 @@ else {
 }
 
 my $ret = q_to_str($c1);
+my $check = sprintf("%s", $c1);
 
-if("($ret)" eq sprintf("%s", $c1)) {print "ok 2\n"}
+# Remove trailing zeroes from $ret and $check.
+
+$ret =~ s/0+e/e/gi;
+$check =~ s/0+e/e/gi;
+
+if("($ret)" eq $check) {print "ok 2\n"}
 else {
-  warn "\n$ret ne ", sprintf("%s", $c1), "\n";
+  warn "\n($ret) ne $check\n";
   print "not ok 2\n";
 }
 
