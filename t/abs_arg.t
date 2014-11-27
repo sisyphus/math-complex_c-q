@@ -129,7 +129,7 @@ if(!$@) {
   }
 }
 else {
-  warn "\nSkipping tests 12-15 - Masth::Float128 not loaded\n\$\@: $@\n";
+  warn "\nSkipping tests 12-15 - Math::Float128 not loaded\n\$\@: $@\n";
   for(12..15) {print "ok $_\n"}
 }
 
