@@ -507,7 +507,7 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
 
    This module is free software; you may redistribute it and/or
    modify it under the same terms as Perl itself.
-   Copyright 2011, 2013, 2014, Sisyphus.
+   Copyright 2014, Sisyphus.
 
 =head1 AUTHOR
 
