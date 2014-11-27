@@ -107,7 +107,11 @@ else {
 
 $sz = imag_cq($rop);
 
-if("$sz" eq "0") {print "ok 10\n"}
+# The sign of $sz should be the same as the sign of $op's imaginary part, but $op's imaginary
+# part is NaN ... so we can probably accept either '0' or '-0' here, especially given that we
+# don't support signed NaN. (Recent perl's variously return 0 or -0.)
+
+if("$sz" eq "0" || "$sz" eq "-0") {print "ok 10\n"}
 else {
   warn "\nExpected 0\nGot ", imag_cq($rop), "\n";
   print "not ok 10\n";
