@@ -16,8 +16,8 @@ my %options = %{
     resources => {
       repository => {
         type => 'git',
-        url => 'https://github.com/sisyphus/math-complex_c.git',
-        web => 'https://github.com/sisyphus/math-complex_c',
+        url => 'https://github.com/sisyphus/math-complex_c-q.git',
+        web => 'https://github.com/sisyphus/math-complex_c-q',
       },
     },
   },
