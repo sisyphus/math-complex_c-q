@@ -194,7 +194,7 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
    use warnings;
    use strict;
    use Math::Complex_C::Q qw(:all);
-   # For brevity, use MCQ which is an aliasw for Math::Complex_C::new
+   # For brevity, use MCQ which is an alias for Math::Complex_C::Q::new
    my $c =    MCQ(12.5, 1125); # assign as NV
    my $root = MCQ();
 
