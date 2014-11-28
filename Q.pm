@@ -232,9 +232,10 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
     $rop is a returned Math::Complex_C::Q object; $re and $im are the real and
     imaginary values (respectively) that $rop holds. They (ie $re, $im) can be
     integer values (IV or UV), floating point values (NV), numeric strings
-    or Math::Float128 objects.Integer values (IV/UV) will be converted to floating
-    point (NV) before being assigned. Note that the two arguments ($re $im) are
-    optional - ie they can be omitted.
+    or Math::Float128 objects.IV, UV and NV values will be cast to __float128
+    values before being assigned. Strings (PV) will be assigned using C's
+    strtoflt128() function.
+    Note that the two arguments ($re $im) are optional - ie they can be omitted.
     If no arguments are supplied, then $rop will be assigned NaN for both the real
     and imaginary parts.
     If only one argument is supplied, and that argument is a Math::Complex_C::Q
