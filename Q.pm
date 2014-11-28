@@ -424,17 +424,17 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
     Sets $rop to a projection of $op onto the Riemann sphere.
     Wraps C's 'cprojq' function.
 
-   $rop = get_nanq();
-    Sets $rop to NaN.
+   $nv = get_nanq();
+    Sets $nv to NaN.
 
-   $rop = get_infq();
-    Sets $rop to Inf.
+   $nv = get_infq();
+    Sets $nv to Inf.
 
-   $bool = is_nanq($op);
-    Returns true if $op is a NaN - else returns false
+   $bool = is_nanq($nv);
+    Returns true if $nv is a NaN - else returns false
 
-   $bool = is_infq($op);
-    Returns true if $op is -Inf or +Inf - else returns false
+   $bool = is_infq($nv);
+    Returns true if $nv is -Inf or +Inf - else returns false
 
 
 =head1 OUTPUT FUNCTIONS
