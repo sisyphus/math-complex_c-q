@@ -216,7 +216,7 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
         $obj = MCQ('2.3', '1.09'); # Assigns the __float128 values using C's
                                    # strtoflt128() function.
 
-        ($r, $i) = q_to_str($obj); # Use C's quadmath_snprintf() function to
+        $str = q_to_str($obj); # Use C's quadmath_snprintf() function to
                                    # return real/imaginary vals as strings.
 
     2) if you have Math::Float128,assign and retrieve Math::Float128 objects:
