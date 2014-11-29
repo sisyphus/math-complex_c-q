@@ -186,8 +186,7 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
 
 =head1 DEPENDENCIES
 
-   In order to compile this module, a C compiler that provides the quadmath
-   library is needed.
+   In order to compile this module, the quadmath library is needed.
 
 =head1 DESCRIPTION
 
@@ -204,25 +203,14 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
    See also the Math::Complex_C::Q test suite for some (simplistic) examples
    of usage.
 
-   The __complex128 data type consists of a __float128 real component and a
-   __float128 imaginary component.
-   As of perl-5.21.4, it is possible (on many systems) to build perl with an
-   NV-type of __float128, and this module is written largely for the use of
-   such perls. (Run "perl -V:nvtype" to see what your perl's NV type is.) If,
-   however, your NV-type is either "double" or "long double", you can still
-   utilise this module and the functions it contains. Two ways to do that:
-    1) assign numeric strings to Math::Complex_C::Q objects and retrieve the
-       values as numeric strings, eg:
-        $obj = MCQ('2.3', '1.09'); # Assigns the __float128 values using C's
-                                   # strtoflt128() function.
-
-        $str = q_to_str($obj); # Use C's quadmath_snprintf() function to
-                                   # return real/imaginary vals as strings.
-
-    2) if you have Math::Float128,assign and retrieve Math::Float128 objects:
-        $rop = MCQ($f_r, $f_i)  # Assigning  values - see MCQ  docs, below.
-        F2cq($rop, $f_r, $f_i); # Assigning  values - see F2cq docs, below.
-        cq2F($f_r, $f_i, $op);  # Retrieving values - see cq2F docs, below.
+   This module is written largely for the use of perl builds whose nvtype is
+   '__float128'. Run "perl -V:nvtype" to see what your perl's NV type is. If
+   your nvtype is not '__float128' you can still use this module  and utilise
+   the extra precision it provides. See the "Which Math::Complex_C" section
+   of the README that ships with this module's source for a more detailed
+   explanation.
+   You can also install Math::Complex_C and/or Math::Complex_C::L if this
+   module won't build for you or you prefer to work with less precision.
 
 =head1 FUNCTIONS
 
@@ -235,7 +223,7 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
     or Math::Float128 objects.IV, UV and NV values will be cast to __float128
     values before being assigned. Strings (PV) will be assigned using C's
     strtoflt128() function.
-    Note that the two arguments ($re $im) are optional - ie they can be omitted.
+    Note that the two arguments ($re & $im) are optional - ie they can be omitted.
     If no arguments are supplied, then $rop will be assigned NaN for both the real
     and imaginary parts.
     If only one argument is supplied, and that argument is a Math::Complex_C::Q
