@@ -368,8 +368,10 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
    tan_cq($rop, $op);
     Sets $rop to tan($op). Wraps C's 'ctanq' function.
     Not presently implemented with mingw-64 compilers - crashes perl.
-    With mingw.org compilers this is currently implemented as sin
-    divided by cos, as tan itself gets mis-calculated.
+    Implemented as sin divided by cos in those situations where the
+    Makefile.PL's investigations have indicated that the bug is
+    present. Math::Complex_C::Q::_gcc_tan_bug() returns true iff the
+    workaround has been implemented.
 
    acosh_cq($rop, $op);
     Sets $rop to acosh($op). Wraps C's 'cacoshq' function.
@@ -391,8 +393,10 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
    tanh_cq($rop, $op);
     Sets $rop to tanh($op). Wraps C's 'ctanhq' function.
     Not presently implemented with mingw-64 compilers - crashes perl.
-    With mingw.org compilers this is currently implemented as sinh
-    divided by cosh, as tanh itself gets mis-calculated.
+    Implemented as sinh divided by cosh in those situations where the
+    Makefile.PL's investigations have indicated that the bug is
+    present. Math::Complex_C::Q::_gcc_tan_bug() returns true iff the
+    workaround has been implemented.
 
    exp_cq($rop, $op);
     Sets $rop to e ** $op. Wraps C's 'cexpq' function.
