@@ -41,12 +41,12 @@ typedef __float128 float128;
 typedef __complex128 complex128;
 #endif
 
-#ifdef __MINGW64_VERSION_MAJOR /* This condition needs tweaking when the bugginess is fixed */
+#if defined(__MINGW64_VERSION_MAJOR) /* mingw-w64 compiler - this condition needs tweaking */
 #define MINGW_W64_BUGGY 1
+#elif defined(__MINGW32__) && !defined(NO_GCC_TAN_BUG)
+#ifndef GCC_TAN_BUG
+#define GCC_TAN_BUG 1
 #endif
-
-#if defined(__MINGW32__) && !defined(__MINGW64_VERSION_MAJOR)
-#define MINGW_ORG_VENDOR 1
 #endif
 
 #define MATH_COMPLEX complex128
@@ -603,7 +603,7 @@ void sin_cq(pTHX_ SV * rop, SV * op) {
 void tan_cq(pTHX_ SV * rop, SV * op) {
 #if defined(MINGW_W64_BUGGY)
      croak("tan_cq not implemented for mingw-w64 compilers");
-#elif defined(MINGW_ORG_VENDOR)
+#elif defined(GCC_TAN_BUG)
      *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = csinq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))))) /
                                                    ccosq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
 #else
@@ -642,7 +642,7 @@ void sinh_cq(pTHX_ SV * rop, SV * op) {
 void tanh_cq(pTHX_ SV * rop, SV * op) {
 #ifdef MINGW_W64_BUGGY
      croak("tanh_cq not implemented for mingw-w64 compilers");
-#elif defined(MINGW_ORG_VENDOR)
+#elif defined(GCC_TAN_BUG)
      *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = csinhq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))))) /
                                                    ccoshq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
 #else
@@ -1448,7 +1448,7 @@ void _q_to_strp(pTHX_ SV * ld, int decimal_prec) {
      char *rbuffer;
      int query;
 
-     if(decimal_prec < 1)croak("2nd arg (precision) to F128toSTRP  must be at least 1");
+     if(decimal_prec < 1)croak("2nd arg (precision) to _q_to_strp  must be at least 1");
 
      if(sv_isobject(ld)) {
        const char *h = HvNAME(SvSTASH(SvRV(ld)));
@@ -1541,8 +1541,8 @@ int _mingw_w64_bug(void) {
 #endif
 }
 
-int _mingw_org(void) {
-#ifdef MINGW_ORG_VENDOR
+int _gcc_tan_bug(void) {
+#if defined(GCC_TAN_BUG)
     return 1;
 #else
     return 0;
@@ -2865,6 +2865,6 @@ _mingw_w64_bug ()
 
 
 int
-_mingw_org ()
+_gcc_tan_bug ()
 
 
