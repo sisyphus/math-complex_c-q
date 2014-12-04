@@ -19,7 +19,7 @@ unless(defined($cc)) {
 }
 
 my $out = `$cc -o try.exe -x c try.in -lquadmath 2>&1`;
-$diag = $^O =~ /mswin32/i ? `try.exe 2>&1` : `./try 2>&1`;
+$diag = $^O =~ /mswin32/i ? `try.exe 2>&1` : `./try.exe 2>&1`;
 
 print "\ndiag: $diag\n" if -e 'try.exe';
 
