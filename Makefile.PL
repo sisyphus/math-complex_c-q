@@ -1,6 +1,31 @@
 use ExtUtils::MakeMaker;
+use Config;
 
 $defines = $] < 5.008 ? "-DOLDPERL" : "-DNEWPERL";
+
+# Try to detect the presence/absence of a common gcc bug in ctanq() and ctanhq().
+# We test only for the ctanq() bug, as either both functions are buggy or
+# neither is buggy.
+my $cc = (grep defined, $Config{cc}, 'cc')[0];
+my $out = `$cc -o try.exe -x c try.in -lquadmath 2>&1`;
+$diag = $^O =~ /mswin32/i ? `try.exe 2>&1` : `./try 2>&1`;
+
+print "\ndiag: $diag\n" if -e 'try.exe';
+
+if($diag =~ /^bugginess detected/) {
+  print "tan/tanh bug present - implementing workaround\n";
+  $defines .= ' -DGCC_TAN_BUG';
+}
+
+if($diag =~ /^known bug not detected/) {
+  print "tan/tanh bug absent\n";
+  $defines .= ' -DNO_GCC_TAN_BUG';
+}
+
+# Remove the test executable
+if(-e 'try.exe' && !unlink('./try.exe')) {
+  warn "Failed to unlink try.exe";
+}
 
 my %options = %{
 {
