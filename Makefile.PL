@@ -6,7 +6,18 @@ $defines = $] < 5.008 ? "-DOLDPERL" : "-DNEWPERL";
 # Try to detect the presence/absence of a common gcc bug in ctanq() and ctanhq().
 # We test only for the ctanq() bug, as either both functions are buggy or
 # neither is buggy.
-my $cc = (grep defined, $Config{cc}, 'cc')[0];
+my $cc;
+
+if(@ARGV) {
+  for my $arg(@ARGV) {
+    $cc = (split /=/, $arg)[1] if $arg =~ /^cc=/i;
+  }
+}
+
+unless(defined($cc)) {
+  $cc = defined($Config{cc}) ? $Config{cc} : 'cc';
+}
+
 my $out = `$cc -o try.exe -x c try.in -lquadmath 2>&1`;
 $diag = $^O =~ /mswin32/i ? `try.exe 2>&1` : `./try 2>&1`;
 
