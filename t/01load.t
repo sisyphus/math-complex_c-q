@@ -35,3 +35,5 @@ warn "\n   No support for pow, exp, sin, cos, tan, sinh, cosh, tanh\n   with thi
  if Math::Complex_C::Q::_mingw_w64_bug();
 
 
+warn "\n   Implementing workarounds for tan_cq and tanh_cq - see this module's docs.\n"
+ if Math::Complex_C::Q::_gcc_tan_bug();
