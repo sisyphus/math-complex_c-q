@@ -3,6 +3,7 @@ MANIFEST
 README
 Q.pm
 Q.xs
+try.in
 t/01load.t
 t/abs_arg.t
 t/bool.t
