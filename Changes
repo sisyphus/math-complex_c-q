@@ -1,3 +1,6 @@
+0.03
+
+
 0.02
  - Try to detect the presence of the gcc bug in ctanq() and ctanhq(), and implement
    the workaround if required.
