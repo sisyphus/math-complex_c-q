@@ -97,7 +97,7 @@ else {
 
 eval {require Math::Float128;};
 
-if(!$@) {
+if(!$@ && $Math::Float128::VERSION ge '0.05') {
   $rop = arg_cq2F($op);
   $irop = Math::Complex_C::Q::_itsa($rop);
 
@@ -129,7 +129,7 @@ if(!$@) {
   }
 }
 else {
-  warn "\nSkipping tests 12-15 - Math::Float128 not loaded\n\$\@: $@\n";
+  warn "\nSkipping tests 12-15 - Math-Float128-0.05 (or later) not loaded\n\$\@: $@\n";
   for(12..15) {print "ok $_\n"}
 }
 
