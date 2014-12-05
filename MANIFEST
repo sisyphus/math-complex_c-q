@@ -1,6 +1,7 @@
 Makefile.PL
 MANIFEST
 README
+Changes
 Q.pm
 Q.xs
 try.in
