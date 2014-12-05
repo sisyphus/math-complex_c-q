@@ -11,6 +11,14 @@ if($@) {
   exit 0;
 }
 
+if($Math::Float128::VERSION lt '0.05') {
+  print "1..1\n";
+  warn "Skipping all tests as Math-Float128-0.05 (or later) is not available.\n",
+       "We have only version $Math::Float128::VERSION.\n";
+  print "ok 1\n";
+  exit 0;
+}
+
 print "1..8\n";
 
 my $f_r = Math::Float128->new('3.1');
