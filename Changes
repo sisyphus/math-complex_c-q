@@ -1,4 +1,6 @@
 0.04
+ - Have the Makefile.PL perform a test that works around the brokenness of
+   Bingos' NetBSD smoker(s).
 
 0.03
  - Fix test bugs in t/abs_arg.t and t/new_F128.t
