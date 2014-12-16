@@ -38,15 +38,42 @@ if(-e 'try.exe' && !unlink('./try.exe')) {
   warn "Failed to unlink try.exe";
 }
 
+# Attempt to avoid the incorrect 'FAIL' reports from Chris Williams' broken NetBSD smoker(s).
+# Comment out the 'exit 0;' (26 lines further down) if this causes problems.
+
+if($Config{osname} eq 'netbsd') {
+
+  my $inc = '';
+
+  if(@ARGV) {
+    for my $arg(@ARGV) {
+      $inc = (split /=/, $arg)[1] if $arg =~ /^inc=/i;
+    }
+  }
+
+  $inc =~ s/'//g;
+  $inc =~ s/"//g;
+
+  my $opt = $Config{optimize};
+
+  my $out = `$cc $opt $inc $Config{ccflags} -o quad.exe -x c quad.in 2>&1`;
+
+  if($out =~ /quadmath\.h: No such file or directory/i) {
+    print "Aborting: Got\n$out\n";
+    exit 0;
+  }
+}
+
 my %options = %{
 {
-  'NAME' => 'Math::Complex_C::Q',
-  'LIBS' => [
+  NAME => 'Math::Complex_C::Q',
+  LIBS => [
     '-lm -lquadmath'
   ],
-  'DEFINE' => $defines,
-  'INC' => '',
-  'VERSION_FROM' => 'Q.pm',
+  DEFINE => $defines,
+  INC => '',
+  VERSION_FROM => 'Q.pm',
+  clean   => { FILES => '*.exe' },
   META_MERGE => {
    'meta-spec' => { version => 2 },
     resources => {
