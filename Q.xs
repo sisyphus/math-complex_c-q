@@ -49,6 +49,8 @@ typedef __complex128 complex128;
 #endif
 #endif
 
+int nnum = 0;
+
 #define MATH_COMPLEX complex128
 
 void q_set_prec(int x) {
@@ -124,6 +126,7 @@ void assign_cq(pTHX_ SV * rop, SV * d1, SV * d2) {
          }
          else {
            if(SvPOK(d1)) {
+             if(!looks_like_number(d1)) nnum++;
              _d1 = strtoflt128(SvPV_nolen(d1), NULL) ;
            }
            else {
@@ -154,6 +157,7 @@ void assign_cq(pTHX_ SV * rop, SV * d1, SV * d2) {
          }
          else {
            if(SvPOK(d2)) {
+             if(!looks_like_number(d2)) nnum++;
              _d2 = strtoflt128(SvPV_nolen(d2), NULL) ;
            }
            else {
@@ -191,6 +195,7 @@ void set_real_cq(pTHX_ SV * rop, SV * d1) {
          }
          else {
            if(SvPOK(d1)) {
+             if(!looks_like_number(d1)) nnum++;
              _d1 = strtoflt128(SvPV_nolen(d1), NULL) ;
            }
            else {
@@ -227,6 +232,7 @@ void set_imag_cq(pTHX_ SV * rop, SV * d2) {
          }
          else {
            if(SvPOK(d2)) {
+             if(!looks_like_number(d2)) nnum++;
              _d2 = strtoflt128(SvPV_nolen(d2), NULL) ;
            }
            else {
@@ -713,6 +719,7 @@ SV * _overload_equiv(pTHX_ SV * a, SV * b, SV * third) {
      }
 
      if(SvPOK(b)) {
+       if(!looks_like_number(b)) nnum++;
        if(strtoflt128(SvPV_nolen(b), NULL) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
           0.0Q == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(1);
        return newSVuv(0);
@@ -748,6 +755,7 @@ SV * _overload_not_equiv(pTHX_ SV * a, SV * b, SV * third) {
        return newSVuv(1);
      }
      if(SvPOK(b)) {
+       if(!looks_like_number(b)) nnum++;
        if(strtoflt128(SvPV_nolen(b), NULL) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
           0.0Q == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(0);
        return newSVuv(1);
@@ -800,6 +808,7 @@ SV * _overload_pow(pTHX_ SV * a, SV * b, SV * third) {
        return obj_ref;
      }
      if(SvPOK(b)) {
+       if(!looks_like_number(b)) nnum++;
        __real__ t = strtoflt128(SvPV_nolen(b), NULL);
        __imag__ t = 0.0Q;
        *pc = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))), t);
@@ -844,6 +853,7 @@ SV * _overload_mul(pTHX_ SV * a, SV * b, SV * third) {
        return obj_ref;
      }
      if(SvPOK(b)) {
+       if(!looks_like_number(b)) nnum++;
        *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) * strtoflt128(SvPV_nolen(b), NULL);
        return obj_ref;
      }
@@ -886,6 +896,7 @@ SV * _overload_add(pTHX_ SV * a, SV * b, SV * third) {
        return obj_ref;
      }
      if(SvPOK(b)) {
+       if(!looks_like_number(b)) nnum++;
        *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) + strtoflt128(SvPV_nolen(b), NULL);
        return obj_ref;
      }
@@ -931,6 +942,7 @@ SV * _overload_div(pTHX_ SV * a, SV * b, SV * third) {
        return obj_ref;
      }
      if(SvPOK(b)) {
+       if(!looks_like_number(b)) nnum++;
        if(third == &PL_sv_yes) *pc = strtoflt128(SvPV_nolen(b), NULL) / *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))));
        else *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) / strtoflt128(SvPV_nolen(b), NULL);
        return obj_ref;
@@ -977,6 +989,7 @@ SV * _overload_sub(pTHX_ SV * a, SV * b, SV * third) {
        return obj_ref;
      }
      if(SvPOK(b)) {
+       if(!looks_like_number(b)) nnum++;
        if(third == &PL_sv_yes) *pc = strtoflt128(SvPV_nolen(b), NULL) - *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))));
        else *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) - strtoflt128(SvPV_nolen(b), NULL);
        return obj_ref;
@@ -1035,6 +1048,7 @@ SV * _overload_pow_eq(pTHX_ SV * a, SV * b, SV * third) {
        return a;
      }
      if(SvPOK(b)) {
+       if(!looks_like_number(b)) nnum++;
        __real__ t = strtoflt128(SvPV_nolen(b), NULL);
        __imag__ t = 0.0Q;
        *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))), t);
@@ -1072,6 +1086,7 @@ SV * _overload_mul_eq(pTHX_ SV * a, SV * b, SV * third) {
      }
 
      if(SvPOK(b)) {
+       if(!looks_like_number(b)) nnum++;
        *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) *= strtoflt128(SvPV_nolen(b), NULL);
        return a;
      }
@@ -1107,6 +1122,7 @@ SV * _overload_add_eq(pTHX_ SV * a, SV * b, SV * third) {
      }
 
      if(SvPOK(b)) {
+       if(!looks_like_number(b)) nnum++;
        *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) += strtoflt128(SvPV_nolen(b), NULL);
        return a;
      }
@@ -1142,6 +1158,7 @@ SV * _overload_div_eq(pTHX_ SV * a, SV * b, SV * third) {
      }
 
      if(SvPOK(b)) {
+       if(!looks_like_number(b)) nnum++;
        *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) /= strtoflt128(SvPV_nolen(b), NULL);
        return a;
      }
@@ -1177,6 +1194,7 @@ SV * _overload_sub_eq(pTHX_ SV * a, SV * b, SV * third) {
      }
 
      if(SvPOK(b)) {
+       if(!looks_like_number(b)) nnum++;
        *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) -= strtoflt128(SvPV_nolen(b), NULL);
        return a;
      }
@@ -1548,6 +1566,25 @@ int _gcc_tan_bug(void) {
     return 0;
 #endif
 }
+
+int nnumflag(void) {
+  return nnum;
+}
+
+void clear_nnum(void) {
+  nnum = 0;
+}
+
+void set_nnum(int x) {
+  nnum = x;
+}
+
+int _lln(pTHX_ SV * x) {
+  if(looks_like_number(x)) return 1;
+  return 0;
+}
+
+
 
 
 
@@ -2867,4 +2904,47 @@ _mingw_w64_bug ()
 int
 _gcc_tan_bug ()
 
+
+int
+nnumflag ()
+
+
+void
+clear_nnum ()
+
+        PREINIT:
+        I32* temp;
+        PPCODE:
+        temp = PL_markstack_ptr++;
+        clear_nnum();
+        if (PL_markstack_ptr != temp) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = temp;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+void
+set_nnum (x)
+	int	x
+        PREINIT:
+        I32* temp;
+        PPCODE:
+        temp = PL_markstack_ptr++;
+        set_nnum(x);
+        if (PL_markstack_ptr != temp) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = temp;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+int
+_lln (x)
+	SV *	x
+CODE:
+  RETVAL = _lln (aTHX_ x);
+OUTPUT:  RETVAL
 
