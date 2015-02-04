@@ -1,6 +1,8 @@
 0.04
  - Have the Makefile.PL perform a test that works around the brokenness of
    Bingos' NetBSD smoker(s).
+ - Add nnumflag(), set_nnum() and clear_nnum() functions. Also start using the perl
+   API function looks_like_number() to detect non-numeric strings.
 
 0.03
  - Fix test bugs in t/abs_arg.t and t/new_F128.t
