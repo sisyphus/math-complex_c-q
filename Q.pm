@@ -212,6 +212,15 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
    You can also install Math::Complex_C and/or Math::Complex_C::L if this
    module won't build for you or you prefer to work with less precision.
 
+   A number of the functions below accept string arguments. These arguments
+   will be tested by the perl API function looks_like_number() for the
+   presence of non-numeric characters. If any such non-numeric characters
+   are detected, then the global non-numeric flag (which is initially set to
+   0) will be incremented. You can query the value this global flag holds by
+   running Math::Complex_C::Q::nnumflag() and you can manually alter the
+   value of the global using Math::Complex_C::Q::set_nnum and
+   Math::Complex_C::Q::clear_nnum. These functions are documented below.
+
 =head1 FUNCTIONS
 
    $rop = Math::Complex_C::Q->new($re, $im);
@@ -495,12 +504,29 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
     (A "true" Math::Complex_C object is, of course, simply one
     that is not "false".)
 
+=head1 OTHER FUNCTIONS
+
+    $iv = Math::Complex_C::Q::nnumflag(); # not exported
+     Returns the value of the non-numeric flag. This flag is
+     initialized to zero, but incemented by 1 whenever a function
+     is handed a string containing non-numeric characters. The
+     value of the flag therefore tells us how many times functions
+     have been handed such a string. The flag can be reset to 0 by
+     running clear_nnum().
+
+    Math::Complex_C::Q::set_nnum($iv); # not exported
+     Resets the global non-numeric flag to the value specified by
+     $iv.
+
+    Math::Complex_C::Q::clear_nnum(); # not exported
+     Resets the global non-numeric flag to 0.(Essentially the same
+     as running set_nnum(0).)
 
 =head1 LICENSE
 
    This module is free software; you may redistribute it and/or
    modify it under the same terms as Perl itself.
-   Copyright 2014, Sisyphus.
+   Copyright 2014-15, Sisyphus.
 
 =head1 AUTHOR
 
