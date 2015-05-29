@@ -41,7 +41,7 @@ typedef __float128 float128;
 typedef __complex128 complex128;
 #endif
 
-#if defined(__MINGW64_VERSION_MAJOR) /* mingw-w64 compiler - this condition needs tweaking */
+#if defined(__MINGW64_VERSION_MAJOR) && __MINGW64_VERSION_MAJOR < 4 /* mingw-w64 compiler - this condition needs tweaking */
 #define MINGW_W64_BUGGY 1
 #elif defined(__MINGW32__) && !defined(NO_GCC_TAN_BUG)
 #ifndef GCC_TAN_BUG
@@ -88,6 +88,19 @@ float128 _get_inf(void) {
 float128 _get_neg_inf(void) {
     float128 inf = -1.0Q / 0.0Q;
     return inf;
+}
+
+int is_nanq(pTHX_ SV * a) {
+     if(SvNV(a) == SvNV(a)) return 0;
+     return 1;
+}
+
+int is_infq(pTHX_ SV * a) {
+     if(SvNV(a) == 0) return 0;
+     if(SvNV(a) != SvNV(a)) return 0;
+     if(SvNV(a) / SvNV(a) == SvNV(a) / SvNV(a)) return 0;
+     if(SvNV(a) < 0) return -1;
+     return 1;
 }
 
 SV * create_cq(pTHX) {
@@ -153,7 +166,7 @@ void assign_cq(pTHX_ SV * rop, SV * d1, SV * d2) {
        }
        else {
          if(SvNOK(d2)) {
-           _d2 = (float128)SvNV(d2);
+            _d2 = (float128)SvNV(d2);
          }
          else {
            if(SvPOK(d2)) {
@@ -1347,19 +1360,6 @@ SV * get_neg_infq(pTHX) {
      return newSVnv(_get_neg_inf());
 }
 
-SV * is_nanq(pTHX_ SV * a) {
-     if(SvNV(a) == SvNV(a)) return newSVuv(0);
-     return newSVuv(1);
-}
-
-SV * is_infq(pTHX_ SV * a) {
-     if(SvNV(a) == 0) return newSVuv(0);
-     if(SvNV(a) != SvNV(a)) return newSVuv(0);
-     if(SvNV(a) / SvNV(a) == SvNV(a) / SvNV(a)) return newSVuv(0);
-     if(SvNV(a) < 0) return newSViv(-1);
-     return newSViv(1);
-}
-
 SV * _complex_type(pTHX) {
     return newSVpv("__complex128", 0);
 }
@@ -1613,6 +1613,20 @@ q_set_prec (x)
 int
 q_get_prec ()
 
+
+int
+is_nanq (a)
+	SV *	a
+CODE:
+  RETVAL = is_nanq (aTHX_ a);
+OUTPUT:  RETVAL
+
+int
+is_infq (a)
+	SV *	a
+CODE:
+  RETVAL = is_infq (aTHX_ a);
+OUTPUT:  RETVAL
 
 SV *
 create_cq ()
@@ -2730,20 +2744,6 @@ CODE:
   RETVAL = get_neg_infq (aTHX);
 OUTPUT:  RETVAL
 
-
-SV *
-is_nanq (a)
-	SV *	a
-CODE:
-  RETVAL = is_nanq (aTHX_ a);
-OUTPUT:  RETVAL
-
-SV *
-is_infq (a)
-	SV *	a
-CODE:
-  RETVAL = is_infq (aTHX_ a);
-OUTPUT:  RETVAL
 
 SV *
 _complex_type ()
