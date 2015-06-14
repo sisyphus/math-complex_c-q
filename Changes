@@ -1,4 +1,5 @@
 0.05
+ - Add additional test to t/overload_string.t
 
 0.04
  - Modify try.in and Q.xs to allow for runtime v4 bugfixes (mingw64 compiler)
