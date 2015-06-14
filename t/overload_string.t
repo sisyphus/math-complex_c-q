@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Math::Complex_C::Q qw(:all);
 
-print "1..6\n";
+print "1..7\n";
 
 my $c1 = MCQ(2.1,-5.1);
 
@@ -64,4 +64,14 @@ if($check == $check2) {print "ok 6\n"}
 else {
   warn "\n$check != $check2\n";
   print "not ok 6\n";
+}
+
+my $ap_tester = MCQ('2.13', '2.12');
+
+my $ap_str = q_to_str($ap_tester);
+
+if($ap_str =~ /2\.1/) {print "ok 7\n"}
+else {
+  warn "\nExpected something that matches /2.1/\nGot $ap_str\n";
+  print "not ok 7\n";
 }
