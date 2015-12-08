@@ -33,7 +33,10 @@ int _MATH_COMPLEX_C_Q_DIGITS = FLT128_DIG;
 int _MATH_COMPLEX_C_Q_DIGITS = 33;
 #endif
 
-#ifdef __MINGW64__
+#if defined(__MINGW32__) && !defined(__MINGW64__)
+typedef __float128 float128 __attribute__ ((aligned(32)));
+typedef __complex128 complex128 __attribute__ ((aligned(32)));
+#elif defined(__MINGW64__)
 typedef __float128 float128 __attribute__ ((aligned(8)));
 typedef __complex128 complex128 __attribute__ ((aligned(8)));
 #else
