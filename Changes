@@ -1,6 +1,7 @@
 0.05
  - Add additional test to t/overload_string.t
  - Fix typedef alignment for __float128 and __complex128 (mingw only)
+ - Change default output to 36 decimal digits.
 
 0.04
  - Modify try.in and Q.xs to allow for runtime v4 bugfixes (mingw64 compiler)
