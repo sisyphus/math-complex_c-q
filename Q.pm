@@ -441,9 +441,8 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
 
 =head1 OUTPUT FUNCTIONS
 
-   Default precision for output of Math::Complex_C::Q objects is whatever is
-   specified by the macro FLT128_DIG in quadmath.h (usually 33). If FLT128_DIG
-   is not defined then default precision is set to 33 decimal digits.
+   Default precision for output of Math::Complex_C::Q objects is 33
+   decimal digits.
 
    This default can be altered using q_set_prec (see below).
 
@@ -526,7 +525,7 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
 
    This module is free software; you may redistribute it and/or
    modify it under the same terms as Perl itself.
-   Copyright 2014-15, Sisyphus.
+   Copyright 2014-16, Sisyphus.
 
 =head1 AUTHOR
 
