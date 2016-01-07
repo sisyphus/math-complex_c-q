@@ -27,11 +27,7 @@
 #  define Newxz(v,n,t) Newz(0,v,n,t)
 #endif
 
-#ifdef FLT128_DIG
-int _MATH_COMPLEX_C_Q_DIGITS = FLT128_DIG;
-#else
-int _MATH_COMPLEX_C_Q_DIGITS = 33;
-#endif
+int _MATH_COMPLEX_C_Q_DIGITS = 36;
 
 #if defined(__MINGW32__) && !defined(__MINGW64__)
 typedef __float128 float128 __attribute__ ((aligned(32)));
