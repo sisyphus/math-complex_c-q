@@ -74,6 +74,7 @@ my %options = %{
   INC => '',
   VERSION_FROM => 'Q.pm',
   clean   => { FILES => '*.exe' },
+  LICENSE => 'perl',
   META_MERGE => {
    'meta-spec' => { version => 2 },
     resources => {
