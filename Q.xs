@@ -126,15 +126,15 @@ void assign_cq(pTHX_ SV * rop, SV * d1, SV * d2) {
      float128 _d1, _d2;
 
      if(SvUOK(d1)) {
-       _d1 = (float128)SvUV(d1);
+       _d1 = (float128)SvUVX(d1);
      }
      else {
        if(SvIOK(d1)) {
-         _d1 = (float128)SvIV(d1);
+         _d1 = (float128)SvIVX(d1);
        }
        else {
          if(SvNOK(d1)) {
-           _d1 = (float128)SvNV(d1);
+           _d1 = (float128)SvNVX(d1);
          }
          else {
            if(SvPOK(d1)) {
@@ -145,7 +145,7 @@ void assign_cq(pTHX_ SV * rop, SV * d1, SV * d2) {
              if(sv_isobject(d1)) {
                const char *h = HvNAME(SvSTASH(SvRV(d1)));
                if(strEQ(h, "Math::Float128"))
-                 _d1 = *(INT2PTR(float128 *, SvIV(SvRV(d1))));
+                 _d1 = *(INT2PTR(float128 *, SvIVX(SvRV(d1))));
                else croak("Invalid object given as 2nd arg to assign_cq function");
              }
              else {
@@ -157,15 +157,15 @@ void assign_cq(pTHX_ SV * rop, SV * d1, SV * d2) {
      }
 
      if(SvUOK(d2)) {
-       _d2 = (float128)SvUV(d2);
+       _d2 = (float128)SvUVX(d2);
      }
      else {
        if(SvIOK(d2)) {
-         _d2 = (float128)SvIV(d2);
+         _d2 = (float128)SvIVX(d2);
        }
        else {
          if(SvNOK(d2)) {
-            _d2 = (float128)SvNV(d2);
+            _d2 = (float128)SvNVX(d2);
          }
          else {
            if(SvPOK(d2)) {
@@ -176,7 +176,7 @@ void assign_cq(pTHX_ SV * rop, SV * d1, SV * d2) {
              if(sv_isobject(d2)) {
                const char *h = HvNAME(SvSTASH(SvRV(d2)));
                if(strEQ(h, "Math::Float128"))
-                 _d2 = *(INT2PTR(float128 *, SvIV(SvRV(d2))));
+                 _d2 = *(INT2PTR(float128 *, SvIVX(SvRV(d2))));
                else croak("Invalid object given as 3rd arg to assign_cq function");
              }
              else {
@@ -187,23 +187,23 @@ void assign_cq(pTHX_ SV * rop, SV * d1, SV * d2) {
        }
      }
 
-     __real__ *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = _d1;
-     __imag__ *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = _d2;
+     __real__ *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = _d1;
+     __imag__ *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = _d2;
 }
 
 void set_real_cq(pTHX_ SV * rop, SV * d1) {
      float128 _d1;
 
      if(SvUOK(d1)) {
-       _d1 = (float128)SvUV(d1);
+       _d1 = (float128)SvUVX(d1);
      }
      else {
        if(SvIOK(d1)) {
-         _d1 = (float128)SvIV(d1);
+         _d1 = (float128)SvIVX(d1);
        }
        else {
          if(SvNOK(d1)) {
-           _d1 = (float128)SvNV(d1);
+           _d1 = (float128)SvNVX(d1);
          }
          else {
            if(SvPOK(d1)) {
@@ -214,7 +214,7 @@ void set_real_cq(pTHX_ SV * rop, SV * d1) {
              if(sv_isobject(d1)) {
                const char *h = HvNAME(SvSTASH(SvRV(d1)));
                if(strEQ(h, "Math::Float128"))
-                 _d1 = *(INT2PTR(float128 *, SvIV(SvRV(d1))));
+                 _d1 = *(INT2PTR(float128 *, SvIVX(SvRV(d1))));
                else croak("Invalid object given as 2nd arg to set_real_cq function");
              }
              else {
@@ -225,22 +225,22 @@ void set_real_cq(pTHX_ SV * rop, SV * d1) {
        }
      }
 
-     __real__ *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = _d1;
+     __real__ *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = _d1;
 }
 
 void set_imag_cq(pTHX_ SV * rop, SV * d2) {
      float128 _d2;
 
      if(SvUOK(d2)) {
-       _d2 = (float128)SvUV(d2);
+       _d2 = (float128)SvUVX(d2);
      }
      else {
        if(SvIOK(d2)) {
-         _d2 = (float128)SvIV(d2);
+         _d2 = (float128)SvIVX(d2);
        }
        else {
          if(SvNOK(d2)) {
-           _d2 = (float128)SvNV(d2);
+           _d2 = (float128)SvNVX(d2);
          }
          else {
            if(SvPOK(d2)) {
@@ -251,7 +251,7 @@ void set_imag_cq(pTHX_ SV * rop, SV * d2) {
              if(sv_isobject(d2)) {
                const char *h = HvNAME(SvSTASH(SvRV(d2)));
                if(strEQ(h, "Math::Float128"))
-                 _d2 = *(INT2PTR(float128 *, SvIV(SvRV(d2))));
+                 _d2 = *(INT2PTR(float128 *, SvIVX(SvRV(d2))));
                else croak("Invalid object given as 2nd arg to set_imag_cq function");
              }
              else {
@@ -262,7 +262,7 @@ void set_imag_cq(pTHX_ SV * rop, SV * d2) {
        }
      }
 
-     __imag__ *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = _d2;
+     __imag__ *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = _d2;
 }
 
 
@@ -275,11 +275,11 @@ void F2cq(pTHX_ SV * rop, SV * d1, SV * d2) {
        if(strEQ(h1, "Math::Float128") &&
           strEQ(h2, "Math::Float128")) {
 
-          _d1 = *(INT2PTR(float128 *, SvIV(SvRV(d1))));
-          _d2 = *(INT2PTR(float128 *, SvIV(SvRV(d2))));
+          _d1 = *(INT2PTR(float128 *, SvIVX(SvRV(d1))));
+          _d2 = *(INT2PTR(float128 *, SvIVX(SvRV(d2))));
 
-          __real__ *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = _d1;
-          __imag__ *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = _d2;
+          __real__ *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = _d1;
+          __imag__ *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = _d2;
        }
        else croak("Both 2nd and 3rd args supplied to F2cq need to be Math::Float128 objects");
      }
@@ -290,7 +290,7 @@ void cq2F(pTHX_ SV * rop1, SV * rop2, SV * op) {
      if(sv_isobject(rop1)) {
        const char *h = HvNAME(SvSTASH(SvRV(rop1)));
        if(strEQ(h, "Math::Float128")) {
-         *(INT2PTR(float128 *, SvIV(SvRV(rop1)))) = crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+         *(INT2PTR(float128 *, SvIVX(SvRV(rop1)))) = crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
        }
        else croak("1st arg (a %s object) supplied to cq2F needs to be a Math::Float128 object", h);
      }
@@ -299,7 +299,7 @@ void cq2F(pTHX_ SV * rop1, SV * rop2, SV * op) {
      if(sv_isobject(rop2)) {
        const char *h = HvNAME(SvSTASH(SvRV(rop2)));
        if(strEQ(h, "Math::Float128")) {
-         *(INT2PTR(float128 *, SvIV(SvRV(rop2)))) = cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+         *(INT2PTR(float128 *, SvIVX(SvRV(rop2)))) = cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
        }
        else croak("2nd arg (a %s object) supplied to cq2F needs to be a Math::Float128 object", h);
      }
@@ -307,111 +307,111 @@ void cq2F(pTHX_ SV * rop1, SV * rop2, SV * op) {
 }
 
 void mul_cq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) *
-                                                   *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op2))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) *
+                                                   *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op2))));
 }
 
 void mul_c_nvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) *
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) *
                                                    (float128)SvNV(op2);
 }
 
 void mul_c_ivq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) *
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) *
                                                    (float128)SvIV(op2);
 }
 
 void mul_c_uvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) *
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) *
                                                    (float128)SvUV(op2);
 }
 
 void mul_c_pvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) *
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) *
                                                    strtoflt128(SvPV_nolen(op2), NULL);
 }
 
 void div_cq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) /
-                                                   *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op2))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) /
+                                                   *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op2))));
 }
 
 void div_c_nvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) /
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) /
                                                    (float128)SvNV(op2);
 }
 
 void div_c_ivq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) /
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) /
                                                    (float128)SvIV(op2);
 }
 
 void div_c_uvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) /
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) /
                                                    (float128)SvUV(op2);
 }
 
 void div_c_pvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) /
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) /
                                                    strtoflt128(SvPV_nolen(op2), NULL);
 }
 
 void add_cq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) +
-                                                   *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op2))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) +
+                                                   *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op2))));
 }
 
 void add_c_nvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) +
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) +
                                                    (float128)SvNV(op2);
 }
 
 void add_c_ivq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) +
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) +
                                                    (float128)SvIV(op2);
 }
 
 void add_c_uvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) +
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) +
                                                    (float128)SvUV(op2);
 }
 
 void add_c_pvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) +
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) +
                                                    strtoflt128(SvPV_nolen(op2), NULL);
 }
 
 void sub_cq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) -
-                                                   *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op2))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) -
+                                                   *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op2))));
 }
 
 void sub_c_nvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) -
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) -
                                                    (float128)SvNV(op2);
 }
 
 void sub_c_ivq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) -
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) -
                                                    (float128)SvIV(op2);
 }
 
 void sub_c_uvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) -
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) -
                                                    (float128)SvUV(op2);
 }
 
 void sub_c_pvq(pTHX_ SV * rop, SV * op1, SV * op2) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op1)))) -
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op1)))) -
                                                    strtoflt128(SvPV_nolen(op2), NULL);
 }
 
 void DESTROY(pTHX_ SV *  op) {
-     Safefree(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))));
+     Safefree(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op))));
 }
 
 SV * real_cq(pTHX_ SV * op) {
-     return newSVnv(crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))))));
+     return newSVnv(crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op))))));
 }
 
 SV * real_cq2F(pTHX_ SV * op) {
@@ -424,7 +424,7 @@ SV * real_cq2F(pTHX_ SV * op) {
      obj_ref = newSV(0);
      obj = newSVrv(obj_ref, "Math::Float128");
 
-     *f = crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *f = crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 
      sv_setiv(obj, INT2PTR(IV,f));
      SvREADONLY_on(obj);
@@ -440,7 +440,7 @@ void real_cq2str(pTHX_ SV * op) {
        const char *h = HvNAME(SvSTASH(SvRV(op)));
        if(strEQ(h, "Math::Complex_C::Q")) {
           EXTEND(SP, 1);
-          t = crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+          t = crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 
           Newx(buffer, 15 + _MATH_COMPLEX_C_Q_DIGITS, char);
           if(buffer == NULL) croak("Failed to allocate memory in real_cq2str");
@@ -455,7 +455,7 @@ void real_cq2str(pTHX_ SV * op) {
 }
 
 SV * imag_cq(pTHX_ SV * op) {
-     return newSVnv(cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))))));
+     return newSVnv(cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op))))));
 }
 
 SV * imag_cq2F(pTHX_ SV * op) {
@@ -468,7 +468,7 @@ SV * imag_cq2F(pTHX_ SV * op) {
      obj_ref = newSV(0);
      obj = newSVrv(obj_ref, "Math::Float128");
 
-     *f = cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *f = cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 
      sv_setiv(obj, INT2PTR(IV,f));
      SvREADONLY_on(obj);
@@ -484,7 +484,7 @@ void imag_cq2str(pTHX_ SV * op) {
        const char *h = HvNAME(SvSTASH(SvRV(op)));
        if(strEQ(h, "Math::Complex_C::Q")) {
           EXTEND(SP, 1);
-          t = cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+          t = cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 
           Newx(buffer, 15 + _MATH_COMPLEX_C_Q_DIGITS, char);
           if(buffer == NULL) croak("Failed to allocate memory in imag_cq2str");
@@ -499,7 +499,7 @@ void imag_cq2str(pTHX_ SV * op) {
 }
 
 SV * arg_cq(pTHX_ SV * op) {
-     return newSVnv(cargq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))))));
+     return newSVnv(cargq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op))))));
 }
 
 SV * arg_cq2F(pTHX_ SV * op) {
@@ -512,7 +512,7 @@ SV * arg_cq2F(pTHX_ SV * op) {
      obj_ref = newSV(0);
      obj = newSVrv(obj_ref, "Math::Float128");
 
-     *f = cargq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *f = cargq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 
      sv_setiv(obj, INT2PTR(IV,f));
      SvREADONLY_on(obj);
@@ -528,7 +528,7 @@ void arg_cq2str(pTHX_ SV * op) {
        const char *h = HvNAME(SvSTASH(SvRV(op)));
        if(strEQ(h, "Math::Complex_C::Q")) {
           EXTEND(SP, 1);
-          t = cargq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+          t = cargq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 
           Newx(buffer, 15 + _MATH_COMPLEX_C_Q_DIGITS, char);
           if(buffer == NULL) croak("Failed to allocate memory in arg_cq2str");
@@ -543,7 +543,7 @@ void arg_cq2str(pTHX_ SV * op) {
 }
 
 SV * abs_cq(pTHX_ SV * op) {
-     return newSVnv(cabsq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))))));
+     return newSVnv(cabsq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op))))));
 }
 
 SV * abs_cq2F(pTHX_ SV * op) {
@@ -556,7 +556,7 @@ SV * abs_cq2F(pTHX_ SV * op) {
      obj_ref = newSV(0);
      obj = newSVrv(obj_ref, "Math::Float128");
 
-     *f = cabsq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *f = cabsq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 
      sv_setiv(obj, INT2PTR(IV,f));
      SvREADONLY_on(obj);
@@ -572,7 +572,7 @@ void abs_cq2str(pTHX_ SV * op) {
        const char *h = HvNAME(SvSTASH(SvRV(op)));
        if(strEQ(h, "Math::Complex_C::Q")) {
           EXTEND(SP, 1);
-          t = cabsq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+          t = cabsq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 
           Newx(buffer, 15 + _MATH_COMPLEX_C_Q_DIGITS, char);
           if(buffer == NULL) croak("Failed to allocate memory in arg_cq2str");
@@ -587,26 +587,26 @@ void abs_cq2str(pTHX_ SV * op) {
 }
 
 void conj_cq(pTHX_ SV * rop, SV * op) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = conjq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = conjq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 }
 
 void acos_cq(pTHX_ SV * rop, SV * op) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = cacosq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = cacosq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 }
 
 void asin_cq(pTHX_ SV * rop, SV * op) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = casinq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = casinq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 }
 
 void atan_cq(pTHX_ SV * rop, SV * op) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = catanq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = catanq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 }
 
 void cos_cq(pTHX_ SV * rop, SV * op) {
 #ifdef MINGW_W64_BUGGY
      croak("cos_cq not implemented for mingw-w64 compilers");
 #else
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = ccosq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = ccosq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 #endif
 }
 
@@ -614,7 +614,7 @@ void sin_cq(pTHX_ SV * rop, SV * op) {
 #ifdef MINGW_W64_BUGGY
      croak("sin_cq not implemented for mingw-w64 compilers");
 #else
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = csinq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = csinq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 #endif
 }
 
@@ -622,30 +622,30 @@ void tan_cq(pTHX_ SV * rop, SV * op) {
 #if defined(MINGW_W64_BUGGY)
      croak("tan_cq not implemented for mingw-w64 compilers");
 #elif defined(GCC_TAN_BUG)
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = csinq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))))) /
-                                                   ccosq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = csinq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op))))) /
+                                                   ccosq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 #else
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = ctanq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = ctanq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 #endif
 }
 
 void acosh_cq(pTHX_ SV * rop, SV * op) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = cacoshq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = cacoshq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 }
 
 void asinh_cq(pTHX_ SV * rop, SV * op) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = casinhq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = casinhq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 }
 
 void atanh_cq(pTHX_ SV * rop, SV * op) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = catanhq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = catanhq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 }
 
 void cosh_cq(pTHX_ SV * rop, SV * op) {
 #ifdef MINGW_W64_BUGGY
      croak("cosh_cq not implemented for mingw-w64 compilers");
 #else
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = ccoshq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = ccoshq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 #endif
 }
 
@@ -653,7 +653,7 @@ void sinh_cq(pTHX_ SV * rop, SV * op) {
 #ifdef MINGW_W64_BUGGY
      croak("sinh_cq not implemented for mingw-w64 compilers");
 #else
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = csinhq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = csinhq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 #endif
 }
 
@@ -661,10 +661,10 @@ void tanh_cq(pTHX_ SV * rop, SV * op) {
 #ifdef MINGW_W64_BUGGY
      croak("tanh_cq not implemented for mingw-w64 compilers");
 #elif defined(GCC_TAN_BUG)
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = csinhq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op))))) /
-                                                   ccoshq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = csinhq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op))))) /
+                                                   ccoshq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 #else
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = ctanhq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = ctanhq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 #endif
 }
 
@@ -672,76 +672,76 @@ void exp_cq(pTHX_ SV * rop, SV * op) {
 #ifdef MINGW_W64_BUGGY /* avoid calling expq() as it's buggy */
      croak("exp_cq not implemented for mingw-w64 compilers");
 #else
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = cexpq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = cexpq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 #endif
 }
 
 void log_cq(pTHX_ SV * rop, SV * op) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = clogq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = clogq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 }
 
 void sqrt_cq(pTHX_ SV * rop, SV * op) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = csqrtq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = csqrtq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 }
 
 void proj_cq(pTHX_ SV * rop, SV * op) {
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = cprojq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = cprojq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))));
 }
 
 void pow_cq(pTHX_ SV * rop, SV * op, SV * exp) {
 #ifdef MINGW_W64_BUGGY
      croak("pow_cq not implemented for mingw-w64 compilers");
 #else
-     *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(op)))),
-                                                        *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(exp)))));
+     *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(op)))),
+                                                        *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(exp)))));
 #endif
 }
 
 SV * _overload_true(pTHX_ SV * rop, SV * second, SV * third) {
-     if (_is_nan(crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))))) &&
-         _is_nan(cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop))))))) return newSVuv(0);
-     if(crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop))))) ||
-        cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))))) return newSVuv(1);
+     if (_is_nan(crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))))) &&
+         _is_nan(cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop))))))) return newSVuv(0);
+     if(crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop))))) ||
+        cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))))) return newSVuv(1);
      return newSVuv(0);
 }
 
 SV * _overload_not(pTHX_ SV * rop, SV * second, SV * third) {
-     if (_is_nan(crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))))) &&
-         _is_nan(cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop))))))) return newSVuv(1);
-     if(crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop))))) ||
-        cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop)))))) return newSVuv(0);
+     if (_is_nan(crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))))) &&
+         _is_nan(cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop))))))) return newSVuv(1);
+     if(crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop))))) ||
+        cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))))) return newSVuv(0);
      return newSVuv(1);
 }
 
 SV * _overload_equiv(pTHX_ SV * a, SV * b, SV * third) {
       if(SvUOK(b)) {
-       if((float128)SvUV(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
-          0.0Q              == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(1);
+       if((float128)SvUVX(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))))) &&
+          0.0Q              == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))))) return newSVuv(1);
        return newSVuv(0);
      }
      if(SvIOK(b)) {
-       if((float128)SvIV(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
-          0.0Q              == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(1);
+       if((float128)SvIVX(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))))) &&
+          0.0Q              == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))))) return newSVuv(1);
        return newSVuv(0);
      }
-     if((float128)SvNOK(b)) {
-       if(SvNV(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
-          0.0Q    == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(1);
+     if(SvNOK(b)) {
+       if((float128)SvNVX(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))))) &&
+          0.0Q    == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))))) return newSVuv(1);
        return newSVuv(0);
      }
 
      if(SvPOK(b)) {
        if(!looks_like_number(b)) nnum++;
-       if(strtoflt128(SvPV_nolen(b), NULL) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
-          0.0Q == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(1);
+       if(strtoflt128(SvPV_nolen(b), NULL) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))))) &&
+          0.0Q == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))))) return newSVuv(1);
        return newSVuv(0);
      }
 
      if(sv_isobject(b)) {
        const char *h = HvNAME(SvSTASH(SvRV(b)));
        if(strEQ(h, "Math::Complex_C::Q")) {
-         if(crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(b))))) &&
-            cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(b))))))
+         if(crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))))) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(b))))) &&
+            cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))))) == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(b))))))
               return newSVuv(1);
          return newSVuv(0);
        }
@@ -752,31 +752,31 @@ SV * _overload_equiv(pTHX_ SV * a, SV * b, SV * third) {
 
 SV * _overload_not_equiv(pTHX_ SV * a, SV * b, SV * third) {
      if(SvUOK(b)) {
-       if((float128)SvUV(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
-          0.0Q              == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(0);
+       if((float128)SvUVX(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))))) &&
+          0.0Q              == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))))) return newSVuv(0);
        return newSVuv(1);
      }
      if(SvIOK(b)) {
-       if((float128)SvIV(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
-          0.0Q              == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(0);
+       if((float128)SvIVX(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))))) &&
+          0.0Q              == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))))) return newSVuv(0);
        return newSVuv(1);
      }
-     if((float128)SvNOK(b)) {
-       if(SvNV(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
-          0.0Q    == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(0);
+     if(SvNOK(b)) {
+       if((float128)SvNVX(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))))) &&
+          0.0Q    == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))))) return newSVuv(0);
        return newSVuv(1);
      }
      if(SvPOK(b)) {
        if(!looks_like_number(b)) nnum++;
-       if(strtoflt128(SvPV_nolen(b), NULL) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) &&
-          0.0Q == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))))) return newSVuv(0);
+       if(strtoflt128(SvPV_nolen(b), NULL) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))))) &&
+          0.0Q == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))))) return newSVuv(0);
        return newSVuv(1);
      }
      if(sv_isobject(b)) {
        const char *h = HvNAME(SvSTASH(SvRV(b)));
        if(strEQ(h, "Math::Complex_C::Q")) {
-         if(crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(b))))) &&
-            cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))))) == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(b))))))
+         if(crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))))) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(b))))) &&
+            cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))))) == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(b))))))
               return newSVuv(0);
          return newSVuv(1);
        }
@@ -802,34 +802,34 @@ SV * _overload_pow(pTHX_ SV * a, SV * b, SV * third) {
      sv_setiv(obj, INT2PTR(IV,pc));
      SvREADONLY_on(obj);
      if(SvUOK(b)) {
-       __real__ t = (float128)SvUV(b);
+       __real__ t = (float128)SvUVX(b);
        __imag__ t = 0.0Q;
-       *pc = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))), t);
+       *pc = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))), t);
        return obj_ref;
      }
      if(SvIOK(b)) {
-       __real__ t = (float128)SvIV(b);
+       __real__ t = (float128)SvIVX(b);
        __imag__ t = 0.0Q;
-       *pc = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))), t);
+       *pc = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))), t);
        return obj_ref;
      }
      if(SvNOK(b)) {
-       __real__ t = (float128)SvNV(b);
+       __real__ t = (float128)SvNVX(b);
        __imag__ t = 0.0Q;
-       *pc = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))), t);
+       *pc = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))), t);
        return obj_ref;
      }
      if(SvPOK(b)) {
        if(!looks_like_number(b)) nnum++;
        __real__ t = strtoflt128(SvPV_nolen(b), NULL);
        __imag__ t = 0.0Q;
-       *pc = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))), t);
+       *pc = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))), t);
        return obj_ref;
      }
      else if(sv_isobject(b)) {
        const char *h = HvNAME(SvSTASH(SvRV(b)));
        if(strEQ(h, "Math::Complex_C::Q")) {
-         *pc = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))), *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(b)))));
+         *pc = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))), *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(b)))));
          return obj_ref;
        }
      }
@@ -851,28 +851,28 @@ SV * _overload_mul(pTHX_ SV * a, SV * b, SV * third) {
      SvREADONLY_on(obj);
 
      if(SvUOK(b)) {
-       *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) * (float128)SvUV(b);
+       *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) * (float128)SvUVX(b);
        return obj_ref;
      }
 
      if(SvIOK(b)) {
-       *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) * (float128)SvIV(b);
+       *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) * (float128)SvIVX(b);
        return obj_ref;
      }
 
      if(SvNOK(b)) {
-       *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) * (float128)SvNV(b);
+       *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) * (float128)SvNVX(b);
        return obj_ref;
      }
      if(SvPOK(b)) {
        if(!looks_like_number(b)) nnum++;
-       *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) * strtoflt128(SvPV_nolen(b), NULL);
+       *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) * strtoflt128(SvPV_nolen(b), NULL);
        return obj_ref;
      }
      if(sv_isobject(b)) {
        const char *h = HvNAME(SvSTASH(SvRV(b)));
        if(strEQ(h, "Math::Complex_C::Q")) {
-         *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) * *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(b))));
+         *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) * *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(b))));
          return obj_ref;
        }
      }
@@ -894,28 +894,28 @@ SV * _overload_add(pTHX_ SV * a, SV * b, SV * third) {
      SvREADONLY_on(obj);
 
      if(SvUOK(b)) {
-       *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) + (float128)SvUV(b);
+       *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) + (float128)SvUVX(b);
        return obj_ref;
      }
 
      if(SvIOK(b)) {
-       *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) + (float128)SvIV(b);
+       *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) + (float128)SvIVX(b);
        return obj_ref;
      }
 
      if(SvNOK(b)) {
-       *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) + (float128)SvNV(b);
+       *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) + (float128)SvNVX(b);
        return obj_ref;
      }
      if(SvPOK(b)) {
        if(!looks_like_number(b)) nnum++;
-       *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) + strtoflt128(SvPV_nolen(b), NULL);
+       *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) + strtoflt128(SvPV_nolen(b), NULL);
        return obj_ref;
      }
      if(sv_isobject(b)) {
        const char *h = HvNAME(SvSTASH(SvRV(b)));
        if(strEQ(h, "Math::Complex_C::Q")) {
-         *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) + *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(b))));
+         *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) + *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(b))));
          return obj_ref;
        }
      }
@@ -937,32 +937,32 @@ SV * _overload_div(pTHX_ SV * a, SV * b, SV * third) {
      SvREADONLY_on(obj);
 
      if(SvUOK(b)) {
-       if(third == &PL_sv_yes) *pc = (float128)SvUV(b) / *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))));
-       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) / (float128)SvUV(b);
+       if(third == &PL_sv_yes) *pc = (float128)SvUVX(b) / *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))));
+       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) / (float128)SvUVX(b);
        return obj_ref;
      }
 
      if(SvIOK(b)) {
-       if(third == &PL_sv_yes) *pc = (float128)SvIV(b) / *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))));
-       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) / (float128)SvIV(b);
+       if(third == &PL_sv_yes) *pc = (float128)SvIVX(b) / *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))));
+       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) / (float128)SvIVX(b);
        return obj_ref;
      }
 
      if(SvNOK(b)) {
-       if(third == &PL_sv_yes) *pc = (float128)SvNV(b) / *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))));
-       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) / (float128)SvNV(b);
+       if(third == &PL_sv_yes) *pc = (float128)SvNVX(b) / *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))));
+       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) / (float128)SvNVX(b);
        return obj_ref;
      }
      if(SvPOK(b)) {
        if(!looks_like_number(b)) nnum++;
-       if(third == &PL_sv_yes) *pc = strtoflt128(SvPV_nolen(b), NULL) / *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))));
-       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) / strtoflt128(SvPV_nolen(b), NULL);
+       if(third == &PL_sv_yes) *pc = strtoflt128(SvPV_nolen(b), NULL) / *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))));
+       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) / strtoflt128(SvPV_nolen(b), NULL);
        return obj_ref;
      }
      if(sv_isobject(b)) {
        const char *h = HvNAME(SvSTASH(SvRV(b)));
        if(strEQ(h, "Math::Complex_C::Q")) {
-         *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) / *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(b))));
+         *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) / *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(b))));
          return obj_ref;
        }
      }
@@ -984,32 +984,32 @@ SV * _overload_sub(pTHX_ SV * a, SV * b, SV * third) {
      SvREADONLY_on(obj);
 
      if(SvUOK(b)) {
-       if(third == &PL_sv_yes) *pc = (float128)SvUV(b) - *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))));
-       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) - (float128)SvUV(b);
+       if(third == &PL_sv_yes) *pc = (float128)SvUVX(b) - *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))));
+       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) - (float128)SvUVX(b);
        return obj_ref;
      }
 
      if(SvIOK(b)) {
-       if(third == &PL_sv_yes) *pc = (float128)SvIV(b) - *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))));
-       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) - (float128)SvIV(b);
+       if(third == &PL_sv_yes) *pc = (float128)SvIVX(b) - *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))));
+       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) - (float128)SvIVX(b);
        return obj_ref;
      }
 
      if(SvNOK(b)) {
-       if(third == &PL_sv_yes) *pc = (float128)SvNV(b) - *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))));
-       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) - (float128)SvNV(b);
+       if(third == &PL_sv_yes) *pc = (float128)SvNVX(b) - *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))));
+       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) - (float128)SvNVX(b);
        return obj_ref;
      }
      if(SvPOK(b)) {
        if(!looks_like_number(b)) nnum++;
-       if(third == &PL_sv_yes) *pc = strtoflt128(SvPV_nolen(b), NULL) - *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))));
-       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) - strtoflt128(SvPV_nolen(b), NULL);
+       if(third == &PL_sv_yes) *pc = strtoflt128(SvPV_nolen(b), NULL) - *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))));
+       else *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) - strtoflt128(SvPV_nolen(b), NULL);
        return obj_ref;
      }
      if(sv_isobject(b)) {
        const char *h = HvNAME(SvSTASH(SvRV(b)));
        if(strEQ(h, "Math::Complex_C::Q")) {
-         *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) - *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(b))));
+         *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) - *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(b))));
          return obj_ref;
        }
      }
@@ -1027,7 +1027,7 @@ SV * _overload_sqrt(pTHX_ SV * a, SV * b, SV * third) {
      obj_ref = newSV(0);
      obj = newSVrv(obj_ref, "Math::Complex_C::Q");
 
-     *pc = csqrtq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))));
+     *pc = csqrtq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))));
 
      sv_setiv(obj, INT2PTR(IV,pc));
      SvREADONLY_on(obj);
@@ -1042,35 +1042,35 @@ SV * _overload_pow_eq(pTHX_ SV * a, SV * b, SV * third) {
      SvREFCNT_inc(a);
 
      if(SvUOK(b)) {
-       __real__ t = (float128)SvUV(b);
+       __real__ t = (float128)SvUVX(b);
        __imag__ t = 0.0Q;
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))), t);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))), t);
        return a;
      }
      if(SvIOK(b)) {
-       __real__ t = (float128)SvIV(b);
+       __real__ t = (float128)SvIVX(b);
        __imag__ t = 0.0Q;
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))), t);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))), t);
        return a;
      }
      if(SvNOK(b)) {
-       __real__ t = (float128)SvNV(b);
+       __real__ t = (float128)SvNVX(b);
        __imag__ t = 0.0Q;
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))), t);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))), t);
        return a;
      }
      if(SvPOK(b)) {
        if(!looks_like_number(b)) nnum++;
        __real__ t = strtoflt128(SvPV_nolen(b), NULL);
        __imag__ t = 0.0Q;
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))), t);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))), t);
        return a;
      }
      if(sv_isobject(b)) {
        const char *h = HvNAME(SvSTASH(SvRV(b)));
        if(strEQ(h, "Math::Complex_C::Q")) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))),
-                                                        *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(b)))));
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) = cpowq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))),
+                                                        *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(b)))));
          return a;
        }
      }
@@ -1083,30 +1083,30 @@ SV * _overload_mul_eq(pTHX_ SV * a, SV * b, SV * third) {
      SvREFCNT_inc(a);
 
      if(SvUOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) *= (float128)SvUV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) *= (float128)SvUVX(b);
        return a;
      }
 
      if(SvIOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) *= (float128)SvIV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) *= (float128)SvIVX(b);
        return a;
      }
 
      if(SvNOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) *= (float128)SvNV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) *= (float128)SvNVX(b);
        return a;
      }
 
      if(SvPOK(b)) {
        if(!looks_like_number(b)) nnum++;
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) *= strtoflt128(SvPV_nolen(b), NULL);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) *= strtoflt128(SvPV_nolen(b), NULL);
        return a;
      }
 
      if(sv_isobject(b)) {
        const char *h = HvNAME(SvSTASH(SvRV(b)));
        if(strEQ(h, "Math::Complex_C::Q")) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) *= *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(b))));
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) *= *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(b))));
          return a;
        }
      }
@@ -1119,30 +1119,30 @@ SV * _overload_add_eq(pTHX_ SV * a, SV * b, SV * third) {
      SvREFCNT_inc(a);
 
      if(SvUOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) += (float128)SvUV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) += (float128)SvUVX(b);
        return a;
      }
 
      if(SvIOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) += (float128)SvIV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) += (float128)SvIVX(b);
        return a;
      }
 
      if(SvNOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) += (float128)SvNV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) += (float128)SvNVX(b);
        return a;
      }
 
      if(SvPOK(b)) {
        if(!looks_like_number(b)) nnum++;
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) += strtoflt128(SvPV_nolen(b), NULL);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) += strtoflt128(SvPV_nolen(b), NULL);
        return a;
      }
 
      if(sv_isobject(b)) {
        const char *h = HvNAME(SvSTASH(SvRV(b)));
        if(strEQ(h, "Math::Complex_C::Q")) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) += *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(b))));
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) += *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(b))));
          return a;
        }
      }
@@ -1155,30 +1155,30 @@ SV * _overload_div_eq(pTHX_ SV * a, SV * b, SV * third) {
      SvREFCNT_inc(a);
 
      if(SvUOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) /= (float128)SvUV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) /= (float128)SvUVX(b);
        return a;
      }
 
      if(SvIOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) /= (float128)SvIV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) /= (float128)SvIVX(b);
        return a;
      }
 
      if(SvNOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) /= (float128)SvNV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) /= (float128)SvNVX(b);
        return a;
      }
 
      if(SvPOK(b)) {
        if(!looks_like_number(b)) nnum++;
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) /= strtoflt128(SvPV_nolen(b), NULL);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) /= strtoflt128(SvPV_nolen(b), NULL);
        return a;
      }
 
      if(sv_isobject(b)) {
        const char *h = HvNAME(SvSTASH(SvRV(b)));
        if(strEQ(h, "Math::Complex_C::Q")) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) /= *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(b))));
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) /= *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(b))));
          return a;
        }
      }
@@ -1191,30 +1191,30 @@ SV * _overload_sub_eq(pTHX_ SV * a, SV * b, SV * third) {
      SvREFCNT_inc(a);
 
      if(SvUOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) -= (float128)SvUV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) -= (float128)SvUVX(b);
        return a;
      }
 
      if(SvIOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) -= (float128)SvIV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) -= (float128)SvIVX(b);
        return a;
      }
 
      if(SvNOK(b)) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) -= (float128)SvNV(b);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) -= (float128)SvNVX(b);
        return a;
      }
 
      if(SvPOK(b)) {
        if(!looks_like_number(b)) nnum++;
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) -= strtoflt128(SvPV_nolen(b), NULL);
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) -= strtoflt128(SvPV_nolen(b), NULL);
        return a;
      }
 
      if(sv_isobject(b)) {
        const char *h = HvNAME(SvSTASH(SvRV(b)));
        if(strEQ(h, "Math::Complex_C::Q")) {
-       *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) -= *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(b))));
+       *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) -= *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(b))));
          return a;
        }
      }
@@ -1234,8 +1234,8 @@ SV * _overload_copy(pTHX_ SV * a, SV * second, SV * third) {
      obj_ref = newSV(0);
      obj = newSVrv(obj_ref, "Math::Complex_C::Q");
 
-     __real__ *pc = __real__ *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))));
-     __imag__ *pc = __imag__ *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a))));
+     __real__ *pc = __real__ *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))));
+     __imag__ *pc = __imag__ *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))));
 
      sv_setiv(obj, INT2PTR(IV,pc));
      SvREADONLY_on(obj);
@@ -1244,7 +1244,7 @@ SV * _overload_copy(pTHX_ SV * a, SV * second, SV * third) {
 }
 
 SV * _overload_abs(pTHX_ SV * rop, SV * second, SV * third) {
-     return newSVnv(cabsq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(rop))))));
+     return newSVnv(cabsq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop))))));
 }
 
 SV * _overload_exp(pTHX_ SV * a, SV * b, SV * third) {
@@ -1260,7 +1260,7 @@ SV * _overload_exp(pTHX_ SV * a, SV * b, SV * third) {
      obj_ref = newSV(0);
      obj = newSVrv(obj_ref, "Math::Complex_C::Q");
 
-     *pc = cexpq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))));
+     *pc = cexpq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))));
 
      sv_setiv(obj, INT2PTR(IV,pc));
      SvREADONLY_on(obj);
@@ -1278,7 +1278,7 @@ SV * _overload_log(pTHX_ SV * a, SV * b, SV * third) {
      obj_ref = newSV(0);
      obj = newSVrv(obj_ref, "Math::Complex_C::Q");
 
-     *pc = clogq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))));
+     *pc = clogq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))));
 
      sv_setiv(obj, INT2PTR(IV,pc));
      SvREADONLY_on(obj);
@@ -1298,7 +1298,7 @@ SV * _overload_sin(pTHX_ SV * a, SV * b, SV * third) {
      obj_ref = newSV(0);
      obj = newSVrv(obj_ref, "Math::Complex_C::Q");
 
-     *pc = csinq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))));
+     *pc = csinq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))));
 
      sv_setiv(obj, INT2PTR(IV,pc));
      SvREADONLY_on(obj);
@@ -1319,7 +1319,7 @@ SV * _overload_cos(pTHX_ SV * a, SV * b, SV * third) {
      obj_ref = newSV(0);
      obj = newSVrv(obj_ref, "Math::Complex_C::Q");
 
-     *pc = ccosq(*(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))));
+     *pc = ccosq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))));
 
      sv_setiv(obj, INT2PTR(IV,pc));
      SvREADONLY_on(obj);
@@ -1337,8 +1337,8 @@ SV * _overload_atan2(pTHX_ SV * a, SV * b, SV * third) {
      obj_ref = newSV(0);
      obj = newSVrv(obj_ref, "Math::Complex_C::Q");
 
-     *pc = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(a)))) /
-           *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(b)))) ;
+     *pc = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))) /
+           *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(b)))) ;
 
      *pc = catanq(*pc);
 
@@ -1424,7 +1424,7 @@ void _q_to_str(pTHX_ SV * ld) {
        if(strEQ(h, "Math::Complex_C::Q")) {
           EXTEND(SP, 2);
 
-          t = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(ld))));
+          t = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(ld))));
 /**/
           Newx(rbuffer, 15 + _MATH_COMPLEX_C_Q_DIGITS, char);
           if(rbuffer == NULL) croak("Failed to allocate memory in q_to_str");
@@ -1471,7 +1471,7 @@ void _q_to_strp(pTHX_ SV * ld, int decimal_prec) {
        const char *h = HvNAME(SvSTASH(SvRV(ld)));
        if(strEQ(h, "Math::Complex_C::Q")) {
           EXTEND(SP, 2);
-          t = *(INT2PTR(MATH_COMPLEX *, SvIV(SvRV(ld))));
+          t = *(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(ld))));
 /* new */
           Newx(rbuffer, 12 + decimal_prec, char);
           if(rbuffer == NULL) croak("Failed to allocate memory in q_to_strp");
