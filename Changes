@@ -1,4 +1,5 @@
 0.06
+ - Replace SvIV/SvUV/SvNV with SvIVX/SvUVX/SvNVx where appropriate.
 
 0.05
  - Add additional test to t/overload_string.t
