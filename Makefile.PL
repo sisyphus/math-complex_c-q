@@ -64,6 +64,9 @@ if($Config{osname} eq 'netbsd') {
   }
 }
 
+$defines .= " -DNV_IS_DOUBLE"
+  if $Config{nvtype} eq 'double';
+
 my %options = %{
 {
   NAME => 'Math::Complex_C::Q',
