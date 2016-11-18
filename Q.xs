@@ -32,7 +32,7 @@ int _MATH_COMPLEX_C_Q_DIGITS = 36;
 #if defined(__MINGW32__) && !defined(__MINGW64__)
 typedef __float128 float128 __attribute__ ((aligned(32)));
 typedef __complex128 complex128 __attribute__ ((aligned(32)));
-#elif defined(__MINGW64__)
+#elif defined(__MINGW64__) || (defined(DEBUGGING) && defined(NV_IS_DOUBLE))
 typedef __float128 float128 __attribute__ ((aligned(8)));
 typedef __complex128 complex128 __attribute__ ((aligned(8)));
 #else
