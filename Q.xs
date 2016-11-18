@@ -1410,7 +1410,7 @@ SV * _longdouble_Complexsize(pTHX) {
 
 
 SV * _float128_Complexsize(pTHX) {
-     return newSViv(sizeof(__complex128));
+     return newSViv(sizeof(complex128));
 }
 
 void _q_to_str(pTHX_ SV * ld) {
