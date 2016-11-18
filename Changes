@@ -1,5 +1,6 @@
 0.06
  - Replace SvIV/SvUV/SvNV with SvIVX/SvUVX/SvNVX where appropriate.
+ - Following typedef, replace "__complex128" with "complex128".
 
 0.05
  - Add additional test to t/overload_string.t
