@@ -32,7 +32,7 @@ use overload
     'atan2' => \&_overload_atan2,
 ;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 DynaLoader::bootstrap Math::Complex_C::Q $VERSION;
 
@@ -525,7 +525,7 @@ Math::Complex_C::Q - perl interface to C's __complex128 (quadmath) operations.
 
    This module is free software; you may redistribute it and/or
    modify it under the same terms as Perl itself.
-   Copyright 2014-16, Sisyphus.
+   Copyright 2014-17, Sisyphus.
 
 =head1 AUTHOR
 
