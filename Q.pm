@@ -34,7 +34,7 @@ use overload
 
 our $VERSION = '0.07';
 
-DynaLoader::bootstrap Math::Complex_C::Q $VERSION;
+Math::Complex_C::Q->DynaLoader::bootstrap($VERSION);
 
 @Math::Complex_C::Q::EXPORT = ();
 @Math::Complex_C::Q::EXPORT_OK = qw(
