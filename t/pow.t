@@ -6,7 +6,7 @@ my $op = MCQ(5, 4.5);
 my $pow = MCQ(2, 2.5);
 my $rop = MCQ();
 
-print "1..20\n";
+print "1..28\n";
 
 my $eps = 1e-12;
 
@@ -260,6 +260,49 @@ else {
 
 ##############################
 ##############################
+
+if(approx(real_cq(MCQ(2.0) ** 5), 32, $eps)) {print "ok 21\n"}
+else {
+  print "not ok 21\n";
+}
+
+if(approx(real_cq(5 ** MCQ(2.0)), 25, $eps)) {print "ok 22\n"}
+else {
+  print "not ok 22\n";
+}
+
+##############################
+##############################
+
+if(approx(real_cq(MCQ(9.0) ** 0.5), 3, $eps)) {print "ok 23\n"}
+else {print "not ok 23\n"}
+
+if(approx(real_cq(0.5 ** MCQ(9.0)), 0.001953125, $eps)) {print "ok 24\n"}
+else {
+  print "not ok 24\n";
+}
+
+##############################
+##############################
+
+if(approx(real_cq(MCQ(9.0) ** '0.5'), 3, $eps)) {print "ok 25\n"}
+else {print "not ok 25\n"}
+
+if(approx(real_cq('0.5' ** MCQ(9.0)), 0.001953125, $eps)) {print "ok 26\n"}
+else {
+  print "not ok 26\n";
+}
+
+##############################
+##############################
+
+if(approx(real_cq(MCQ(9.0) ** MCQ(0.5)), 3, $eps)) {print "ok 27\n"}
+else {print "not ok 27\n"}
+
+if(approx(real_cq(MCQ(0.5) ** MCQ(9.0)), 0.001953125, $eps)) {print "ok 28\n"}
+else {
+  print "not ok 28\n";
+}
 
 sub approx {
     if(($_[0] > ($_[1] - $_[2])) && ($_[0] < ($_[1] + $_[2]))) {return 1}
