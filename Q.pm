@@ -36,9 +36,7 @@ our $VERSION = '0.08';
 
 Math::Complex_C::Q->DynaLoader::bootstrap($VERSION);
 
-@Math::Complex_C::Q::EXPORT = ();
-@Math::Complex_C::Q::EXPORT_OK = qw(
-
+my @tagged = qw(
     create_cq assign_cq mul_cq mul_c_nvq mul_c_ivq mul_c_uvq div_cq div_c_nvq div_c_ivq div_c_uvq add_cq
     add_c_nvq add_c_ivq add_c_uvq sub_cq sub_c_nvq sub_c_ivq sub_c_uvq real_cq real_cq2F imag_cq2F F2cq
     cq2F real_cq2str imag_cq2str arg_cq2F arg_cq2str abs_cq2F abs_cq2str
@@ -46,22 +44,12 @@ Math::Complex_C::Q->DynaLoader::bootstrap($VERSION);
     cosh_cq sinh_cq tanh_cq exp_cq log_cq sqrt_cq proj_cq pow_cq
     get_nanq get_neg_infq get_infq is_nanq is_infq MCQ
     add_c_pvq sub_c_pvq mul_c_pvq div_c_pvq
-
     str_to_q q_to_str q_to_strp q_set_prec q_get_prec set_real_cq set_imag_cq
     );
 
-%Math::Complex_C::Q::EXPORT_TAGS = (all => [qw(
-
-    create_cq assign_cq mul_cq mul_c_nvq mul_c_ivq mul_c_uvq div_cq div_c_nvq div_c_ivq div_c_uvq add_cq
-    add_c_nvq add_c_ivq add_c_uvq sub_cq sub_c_nvq sub_c_ivq sub_c_uvq real_cq real_cq2F imag_cq2F F2cq
-    cq2F real_cq2str imag_cq2str arg_cq2F arg_cq2str abs_cq2F abs_cq2str
-    imag_cq arg_cq abs_cq conj_cq acos_cq asin_cq atan_cq cos_cq sin_cq tan_cq acosh_cq asinh_cq atanh_cq
-    cosh_cq sinh_cq tanh_cq exp_cq log_cq sqrt_cq proj_cq pow_cq
-    get_nanq get_infq get_neg_infq is_nanq is_infq MCQ
-    add_c_pvq sub_c_pvq mul_c_pvq div_c_pvq
-
-    str_to_q q_to_str q_to_strp q_set_prec q_get_prec set_real_cq set_imag_cq
-    )]);
+@Math::Complex_C::Q::EXPORT = ();
+@Math::Complex_C::Q::EXPORT_OK = @tagged;
+%Math::Complex_C::Q::EXPORT_TAGS = (all => \@tagged);
 
 sub dl_load_flags {0} # Prevent DynaLoader from complaining and croaking
 
