@@ -13,6 +13,7 @@
 
 
 #include "math_complex_c_q_include.h"
+#include "math_complex_c_q_unused.h"
 
 int _MATH_COMPLEX_C_Q_DIGITS = 36;
 
@@ -422,6 +423,7 @@ void real_cq2str(pTHX_ SV * op) {
      dXSARGS;
      float128 t;
      char * buffer;
+     PERL_UNUSED_VAR(items);
 
      if(sv_isobject(op)) {
        const char *h = HvNAME(SvSTASH(SvRV(op)));
@@ -466,6 +468,7 @@ void imag_cq2str(pTHX_ SV * op) {
      dXSARGS;
      float128 t;
      char * buffer;
+     PERL_UNUSED_VAR(items);
 
      if(sv_isobject(op)) {
        const char *h = HvNAME(SvSTASH(SvRV(op)));
@@ -510,6 +513,7 @@ void arg_cq2str(pTHX_ SV * op) {
      dXSARGS;
      float128 t;
      char * buffer;
+     PERL_UNUSED_VAR(items);
 
      if(sv_isobject(op)) {
        const char *h = HvNAME(SvSTASH(SvRV(op)));
@@ -554,6 +558,7 @@ void abs_cq2str(pTHX_ SV * op) {
      dXSARGS;
      float128 t;
      char * buffer;
+     PERL_UNUSED_VAR(items);
 
      if(sv_isobject(op)) {
        const char *h = HvNAME(SvSTASH(SvRV(op)));
@@ -685,6 +690,7 @@ void pow_cq(pTHX_ SV * rop, SV * op, SV * exp) {
 }
 
 SV * _overload_true(pTHX_ SV * rop, SV * second, SV * third) {
+     PERL_UNUSED_ARG2(second, third);
      if (_is_nan(crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))))) &&
          _is_nan(cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop))))))) return newSVuv(0);
      if(crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop))))) ||
@@ -693,6 +699,7 @@ SV * _overload_true(pTHX_ SV * rop, SV * second, SV * third) {
 }
 
 SV * _overload_not(pTHX_ SV * rop, SV * second, SV * third) {
+     PERL_UNUSED_ARG2(second, third);
      if (_is_nan(crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop)))))) &&
          _is_nan(cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop))))))) return newSVuv(1);
      if(crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop))))) ||
@@ -701,6 +708,7 @@ SV * _overload_not(pTHX_ SV * rop, SV * second, SV * third) {
 }
 
 SV * _overload_equiv(pTHX_ SV * a, SV * b, SV * third) {
+      PERL_UNUSED_ARG(third);
       if(SvUOK(b)) {
        if((float128)SvUVX(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))))) &&
           0.0Q              == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))))) return newSVuv(1);
@@ -738,6 +746,7 @@ SV * _overload_equiv(pTHX_ SV * a, SV * b, SV * third) {
 }
 
 SV * _overload_not_equiv(pTHX_ SV * a, SV * b, SV * third) {
+     PERL_UNUSED_ARG(third);
      if(SvUOK(b)) {
        if((float128)SvUVX(b) == crealq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a))))) &&
           0.0Q              == cimagq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(a)))))) return newSVuv(0);
@@ -841,13 +850,14 @@ SV * _overload_pow(pTHX_ SV * a, SV * b, SV * third) {
          return obj_ref;
        }
      }
-     else croak("Invalid argument supplied to Math::Complex_C::Q::_overload_pow function");
+     croak("Invalid argument supplied to Math::Complex_C::Q::_overload_pow function");
 #endif
 }
 
 SV * _overload_mul(pTHX_ SV * a, SV * b, SV * third) {
      MATH_COMPLEX *pc;
      SV * obj_ref, * obj;
+     PERL_UNUSED_ARG(third);
 
      New(42, pc, 1, MATH_COMPLEX);
      if(pc == NULL) croak("Failed to allocate memory in _overload_mul function");
@@ -891,6 +901,8 @@ SV * _overload_mul(pTHX_ SV * a, SV * b, SV * third) {
 SV * _overload_add(pTHX_ SV * a, SV * b, SV * third) {
      MATH_COMPLEX *pc;
      SV * obj_ref, * obj;
+     PERL_UNUSED_ARG(third);
+
 
      New(42, pc, 1, MATH_COMPLEX);
      if(pc == NULL) croak("Failed to allocate memory in _overload_add function");
@@ -1028,6 +1040,8 @@ SV * _overload_sub(pTHX_ SV * a, SV * b, SV * third) {
 SV * _overload_sqrt(pTHX_ SV * a, SV * b, SV * third) {
      MATH_COMPLEX *pc;
      SV * obj_ref, * obj;
+     PERL_UNUSED_ARG2(b, third);
+
 
      New(42, pc, 1, MATH_COMPLEX);
      if(pc == NULL) croak("Failed to allocate memory in _overload_sqrt function");
@@ -1043,6 +1057,8 @@ SV * _overload_sqrt(pTHX_ SV * a, SV * b, SV * third) {
 }
 
 SV * _overload_pow_eq(pTHX_ SV * a, SV * b, SV * third) {
+     PERL_UNUSED_ARG(third);
+
 #ifdef MINGW_W64_BUGGY
      croak("**= (pow-equal) not overloaded for mingw-w64 compilers");
 #else
@@ -1088,6 +1104,8 @@ SV * _overload_pow_eq(pTHX_ SV * a, SV * b, SV * third) {
 }
 
 SV * _overload_mul_eq(pTHX_ SV * a, SV * b, SV * third) {
+     PERL_UNUSED_ARG(third);
+
      SvREFCNT_inc(a);
 
      if(SvUOK(b)) {
@@ -1124,6 +1142,8 @@ SV * _overload_mul_eq(pTHX_ SV * a, SV * b, SV * third) {
 }
 
 SV * _overload_add_eq(pTHX_ SV * a, SV * b, SV * third) {
+     PERL_UNUSED_ARG(third);
+
      SvREFCNT_inc(a);
 
      if(SvUOK(b)) {
@@ -1160,6 +1180,8 @@ SV * _overload_add_eq(pTHX_ SV * a, SV * b, SV * third) {
 }
 
 SV * _overload_div_eq(pTHX_ SV * a, SV * b, SV * third) {
+     PERL_UNUSED_ARG(third);
+
      SvREFCNT_inc(a);
 
      if(SvUOK(b)) {
@@ -1196,6 +1218,8 @@ SV * _overload_div_eq(pTHX_ SV * a, SV * b, SV * third) {
 }
 
 SV * _overload_sub_eq(pTHX_ SV * a, SV * b, SV * third) {
+     PERL_UNUSED_ARG(third);
+
      SvREFCNT_inc(a);
 
      if(SvUOK(b)) {
@@ -1232,9 +1256,9 @@ SV * _overload_sub_eq(pTHX_ SV * a, SV * b, SV * third) {
 }
 
 SV * _overload_copy(pTHX_ SV * a, SV * second, SV * third) {
-
      MATH_COMPLEX *pc;
      SV * obj_ref, * obj;
+     PERL_UNUSED_ARG2(second, third);
 
      New(42, pc, 1, MATH_COMPLEX);
      if(pc == NULL) croak("Failed to allocate memory in _overload_copy function");
@@ -1252,10 +1276,12 @@ SV * _overload_copy(pTHX_ SV * a, SV * second, SV * third) {
 }
 
 SV * _overload_abs(pTHX_ SV * rop, SV * second, SV * third) {
+     PERL_UNUSED_ARG2(second, third);
      return newSVnv(cabsq(*(INT2PTR(MATH_COMPLEX *, SvIVX(SvRV(rop))))));
 }
 
 SV * _overload_exp(pTHX_ SV * a, SV * b, SV * third) {
+     PERL_UNUSED_ARG2(b, third);
 #ifdef MINGW_W64_BUGGY
      croak("exp not overloaded with mingw-w64 compilers");
 #else
@@ -1279,6 +1305,7 @@ SV * _overload_exp(pTHX_ SV * a, SV * b, SV * third) {
 SV * _overload_log(pTHX_ SV * a, SV * b, SV * third) {
      MATH_COMPLEX *pc;
      SV * obj_ref, * obj;
+     PERL_UNUSED_ARG2(b, third);
 
      New(42, pc, 1, MATH_COMPLEX);
      if(pc == NULL) croak("Failed to allocate memory in _overload_log function");
@@ -1294,6 +1321,7 @@ SV * _overload_log(pTHX_ SV * a, SV * b, SV * third) {
 }
 
 SV * _overload_sin(pTHX_ SV * a, SV * b, SV * third) {
+     PERL_UNUSED_ARG2(b, third);
 #ifdef MINGW_W64_BUGGY
      croak("sin not overloaded for mingw-w64 compilers");
 #else
@@ -1315,6 +1343,7 @@ SV * _overload_sin(pTHX_ SV * a, SV * b, SV * third) {
 }
 
 SV * _overload_cos(pTHX_ SV * a, SV * b, SV * third) {
+     PERL_UNUSED_ARG2(b, third);
 #ifdef MINGW_W64_BUGGY
      croak("cos not overloaded for mingw-w64 compilers");
 #else
@@ -1338,7 +1367,7 @@ SV * _overload_cos(pTHX_ SV * a, SV * b, SV * third) {
 SV * _overload_atan2(pTHX_ SV * a, SV * b, SV * third) {
      MATH_COMPLEX *pc;
      SV * obj_ref, * obj;
-
+     PERL_UNUSED_ARG(third);
      New(42, pc, 1, MATH_COMPLEX);
      if(pc == NULL) croak("Failed to allocate memory in _overload_atan2 function");
 
@@ -1426,6 +1455,7 @@ void _q_to_str(pTHX_ SV * ld) {
      MATH_COMPLEX t;
      char *rbuffer;
      int query;
+     PERL_UNUSED_VAR(items);
 
      if(sv_isobject(ld)) {
        const char *h = HvNAME(SvSTASH(SvRV(ld)));
@@ -1472,6 +1502,7 @@ void _q_to_strp(pTHX_ SV * ld, int decimal_prec) {
      MATH_COMPLEX t;
      char *rbuffer;
      int query;
+     PERL_UNUSED_VAR(items);
 
      if(decimal_prec < 1)croak("2nd arg (precision) to _q_to_strp  must be at least 1");
 

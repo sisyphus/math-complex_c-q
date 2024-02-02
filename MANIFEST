@@ -1,6 +1,7 @@
 Makefile.PL
 MANIFEST
 math_complex_c_q_include.h
+math_complex_c_q_unused.h
 README
 Changes
 Q.pm
